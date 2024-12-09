@@ -1,0 +1,85 @@
+{% extends 'myapp/base.html' %}
+{% block main %}
+<!-- main -->
+<style>
+    .sub-page {
+        border: 1px dashed rgb(0, 106, 255);
+    }
+    img {
+        border-radius: 10px;
+        border: 1px solid black;
+        width: 100px;
+        height: 100px;
+
+        
+    }
+</style>
+<main id="home_page">
+<h1>Home Page</h1>
+    <div class="container">
+        <!-- face-shape-check -->
+        <div class="sub-page" id="face-shape-check">
+            <div class="content">
+                <h2><a href="{% url 'myapp:face_shape_check' %}">Face shape check</a></h2>
+                <p>Introduce...</p>
+                <a href="{% url 'myapp:face_shape_check' %}"  class="btn-normal">始まる-></a>
+            </div>
+            
+            <!-- images -->
+            <div class="images">
+                <img src="#" alt="">
+                <img src="#" alt="">
+            </div>
+        </div>
+
+        <!-- suggestions -->
+        <div class="sub-page" id="suggestions">
+            <div class="content">
+                <h2><a href="{% url 'myapp:hair_style_suggestions' %}">Hair Style Suggestions</a></h2>
+                <p>Introduce...</p>
+                <a href="{% url 'myapp:hair_style_suggestions' %}" class="btn-normal">始まる-></a>
+            </div>
+            
+            <!-- images -->
+            <div class="images">
+                <img src="#" alt="">
+                <img src="#" alt="">
+            </div>
+        </div>
+        
+        <!-- virtual-hairstyle -->
+        <div class="sub-page" id="virtual-hairstyle">
+            <div class="content">
+                <h2><a href="{% url 'myapp:virtual_hairstyle' %}">Virtual Hairstyle</a></h2>
+                <p>Introduce...</p>
+                <a href="{% url 'myapp:virtual_hairstyle' %}" class="btn-normal">始まる-></a>
+            </div>
+            
+            <!-- images -->
+            <div class="images">
+                <img src="#" alt="">
+                <img src="#" alt="">
+            </div>
+        </div>
+
+        <!-- appointment -->
+        <div class="sub-page" id="appointment">
+            <div class="content">
+                <h2><a href="{% url 'myapp:appointment' %}">Appointment</a></h2>
+                <p>Introduce...</p>
+                <a href="{% url 'myapp:appointment' %}" class="btn-normal">始まる-></a>
+            </div>
+            
+            <!-- images -->
+            <div class="images">
+                <img src="#" alt="">
+                <img src="#" alt="">
+                
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</main>
+{% endblock %}

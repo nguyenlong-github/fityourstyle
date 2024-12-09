@@ -1,0 +1,46 @@
+<!-- debug css -->
+<style>
+  .navbar {
+    border: 1px dashed red;
+  }
+  .status{
+    border: 1px dashed black;
+    width: fit-content;
+  }
+  .status-color{
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+  }
+</style>
+
+<!-- navbar -->
+<nav class="navbar">
+  <!-- navdiv -->
+  <div class="navdiv">
+    <!-- logo -->
+    <div class="logo">
+      <a href="{% url 'myapp:home_page' %}">FitYourStyle</a>
+    </div>
+    <!-- status -->
+    <div class="status" >
+      <p>status:</p>
+      <div class="status-color"></div>
+      <p>Guest</p>
+      
+    </div>
+    <!-- nav-element -->
+    <ul>
+      <li><a href="{% url 'myapp:home_page' %}">Home Page</a></li>
+      <li><a href="{% url 'myapp:face_shape_check' %}">Face shape check</a></li>
+      <li><a href="{% url 'myapp:hair_style_suggestions' %}">Hair Style Suggestions</a></li>
+      <li><a href="{% url 'myapp:virtual_hairstyle' %}">Virtual Hairstyle</a></li>
+      <li><a href="{% url 'myapp:appointment' %}">Appointment</a></li>
+      <li><a href="{% url 'myapp:appointment_manage' %}">Appointment Manage</a></li>
+      <!-- button -->
+      <button class="btn-normal" id="btn-signup"><a href="#">SignUp</a></button>
+      <button class="btn-normal" id="btn-login"><a href="#">Login</a></button>
+    </ul>
+  </div>
+</nav>

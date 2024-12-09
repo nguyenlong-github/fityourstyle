@@ -1,0 +1,52 @@
+{% extends 'myapp/base.html' %}
+{% block main %}
+<!-- main -->
+<style>
+    .calendar, .content{
+        width: auto;
+        height: 200px;
+        border: 1.5px dashed rgb(14, 116, 226);
+    }
+</style>
+
+<main>
+    <h1>Appointment</h1>
+    <div class="container">
+        <!-- calendar -->
+        <div class="calendar">
+            <h2>Calendar</h2>
+            <form method="GET">
+                <p>{{system_message}}</p>
+                {% if end_datetime %}
+                    <p> Just try again after {{end_datetime}}</p>
+                {% endif %}
+                
+                <div class="calendar-widget">
+                    <label for="appointment-date">Date</label>
+                    <input id="appointment-date" name="appointment-date" type="Date">
+                    <label for="appointment-time">Time</label>
+                    <input id="appointment-time" name="appointment-time" type="time">
+                </div>
+                <button  class="btn-normal" id="btn-check-appoinment">Check</button>
+            </form>
+        </div>
+
+        <!-- content -->
+        <div class="upload">
+            <h2>Upload</h2>
+
+            <!-- form -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <!-- button -->
+                <button class="btn-normal" id="btn-submit-appointment">Submit</button>
+            </form>
+        </div>
+        
+        
+        
+
+    </div>
+</main>
+{% endblock %}

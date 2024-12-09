@@ -1,0 +1,96 @@
+{% extends 'myapp/base.html' %}
+{% block main %}
+<style>
+    .camera, #content-1, #content-2 {
+        border: 1px dashed rgb(0, 119, 255);
+    }
+</style>
+<!-- main -->
+<main id="face_shape_check">
+    <h1>Face Shape Check</h1>
+    <div class="container">
+        <!-- camera -->
+        <div class="camera">
+            <!-- camera screen -->
+            <img id="camera-screen"
+                style="
+                    width: 400px;
+                    height: 200px;
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    " 
+                
+                src="#"
+                alt=""
+            >
+            <br>
+            <!-- button  -->
+            <button class="btn-small" id="btn-again">Again</button>
+            <button class="btn-small" id="btn-take-picture">Take</button>
+        </div>
+
+        <!-- content -->
+        <div class="content">
+
+            <!-- content-1 -->
+            <div id="content-1">
+                <!-- taken picture -->
+                <img style="
+                    width: 400px;
+                    height: 200px;
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    "  
+                id="taken-picture" 
+                src="" 
+                alt="">
+                <br>
+                <!-- button -->
+                <button class="btn-normal" id="btn-check">Check</button>
+            </div>
+
+            <!-- content-2 -->
+            <div id="content-2">
+                <!-- chart -->
+                <div class="chart" style="
+                width: 400px;
+                height: fit-content;
+                border: 1px solid black;
+                border-radius: 10px;
+                ">
+                    <!-- Oblong -->
+                    <label for="Oblong">Oblong</label>
+                    <progress id="Oblong" value="90" max="100"></progress>
+                    <span class ="percentage">90%</span>
+                    <br>
+                    <!-- Oval -->
+                    <label for="Oval">Oval</label>
+                    <progress id="Oval" value="50" max="100"></progress>
+                    <span class ="percentage">50%</span>
+                    <br>
+                    <!-- Round -->
+                    <label for="Round">Round</label>
+                    <progress id="Round" value="10" max="100"></progress>
+                    <span class ="percentage">10%</span>
+                    <br>
+                    <!-- Square -->
+                    <label for="Square">Square</label>
+                    <progress id="Square" value="5" max="100"></progress>
+                    <span class ="percentage">5%</span>
+                    <br>
+                    <!-- Heart -->
+                    <label for="Heart">Heart</label>
+                    <progress id="Heart" value="1" max="100"></progress>
+                    <span class ="percentage">1%</span>
+                    <br>
+                </div>
+            </div>
+            
+
+        </div>
+        
+    </div>
+</main>
+
+
+{% endblock %}

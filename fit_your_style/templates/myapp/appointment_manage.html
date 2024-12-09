@@ -1,0 +1,60 @@
+{% extends 'myapp/base.html' %}
+{% block main %}
+<!-- main -->
+<style>
+    .calendar, .content, .appointment-data, .appointment-img{
+        border: 1.5px dashed rgb(14, 116, 226);
+    }
+    #appointment-img{
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+</style>
+
+<main>
+    <h1>Appointment Manage</h1>
+    <div class="container">
+        <!-- calendar -->
+        <div class="calendar">
+            <h2>Calendar</h2>
+            <form method="GET">
+                <div class="calendar-widget">
+                    <label for="appointment-date">Date</label>
+                    <input id="date" name="date" type="Date">
+                </div>
+                <button class="btn-normal" id="btn-check-appoinment">Check</button>
+            </form>
+        </div>
+
+        <!-- content -->
+        <div class="content">
+            <h2>Check Data</h2>
+            <div class="appointment">
+                <!-- appointment-data -->
+                <div class="appointment-data">
+                    <ul>
+                        {% for appointment in appointment_data %}
+                        <li>Name: {{ appointment.name }} {{ appointment.surname }}</li>
+                        <li>Email: {{appointment.email}}</li>
+                        <li>Phone: {{appointment.phone}}</li>
+                        <li>Date: {{appointment.date}}</li>
+                        <li>Time: {{appointment.time}}</li>
+                        <li>Status: {{appointment.status}}</li>
+                        <!-- img -->
+                        {% if appointment.picture %}
+                        <img id="appointment-img"  src="{{appointment.picture.url}}" alt="">
+                        {% endif %}
+                        <p>Message:{{appointment.message}}</p>
+                        
+                        {% empty %}
+                        <li>No data</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
