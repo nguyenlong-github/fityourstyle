@@ -1,10 +1,8 @@
 # 📌Project Name : Fit Your Style
 
 ## 📝Description
-A brief description of the project:  
 What does the project do:
-
-- This project uses OpenCV and deep learning to identify your face shape.
+- This project uses OpenCV + Mediapipe library and Deep Learning to identify your face shape (Oblong, Round, Oval, Heart, Square)
 - Based on the result, the system suggests suitable hairstyles and includes an AR (Augmented Reality) feature that lets you try them on in real-time.
 
 ## 🔑Key Features
