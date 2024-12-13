@@ -8,6 +8,8 @@ What does the project do:
 - Based on the result, the system suggests suitable hairstyles and includes an AR (Augmented Reality) feature that lets you try them on in real-time.
 
 ## 🔑Key Features
+<img src="face_reconition.gif" alt="face_reconition.gif" height="250" width="250">
+
 - Face shape recognition
 - Hairstyle Suggestions
 - Virtual reality hair try on
