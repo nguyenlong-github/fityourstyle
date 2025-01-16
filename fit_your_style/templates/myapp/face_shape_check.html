@@ -12,20 +12,17 @@
         <!-- camera -->
         <div class="camera">
             <!-- camera screen -->
-            <img id="camera-screen"
+            <video id="camera" 
+                autoplay 
                 style="
                     width: 400px;
                     height: 200px;
                     border: 1px solid black;
                     border-radius: 10px;
-                    " 
-                
-                src="#"
-                alt=""
-            >
+                "></video>
             <br>
             <!-- button  -->
-            <button class="btn-small" id="btn-again">Again</button>
+            
             <button class="btn-small" id="btn-take-picture">Take</button>
         </div>
 
@@ -40,7 +37,7 @@
                     height: 200px;
                     border: 1px solid black;
                     border-radius: 10px;
-                    "  
+                "  
                 id="taken-picture" 
                 src="" 
                 alt="">
@@ -85,12 +82,39 @@
                     <br>
                 </div>
             </div>
-            
 
         </div>
-        
+
     </div>
 </main>
 
+<script>
+    // Get elements
+    const camera = document.getElementById('camera');
+    const takePictureButton = document.getElementById('btn-take-picture');
+    const takenPicture = document.getElementById('taken-picture');
+
+    // Start the camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            camera.srcObject = stream;
+        })
+        .catch((error) => {
+            console.error('Error accessing camera: ', error);
+        });
+
+    // Handle Take Picture
+    takePictureButton.addEventListener('click', () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = camera.videoWidth;
+        canvas.height = camera.videoHeight;
+
+        const context = canvas.getContext('2d');
+        context.drawImage(camera, 0, 0, canvas.width, canvas.height);
+
+        // Set the taken picture source
+        takenPicture.src = canvas.toDataURL('image/png');
+    });
+</script>
 
 {% endblock %}

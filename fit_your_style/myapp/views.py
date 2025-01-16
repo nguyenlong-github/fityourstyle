@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Appointment
+from .models import Appointment, User
 from datetime import datetime, timedelta
 from .forms import AppointmentForm
+
 
 
 # HomePageView
@@ -57,10 +58,17 @@ class AppointmentView(View):
         else:
             return render(request, 'myapp/appointment.html',{'system_message' : "Fill date and time please !",'form': form})
 
+    
     def post(self, request):
+    # def post(self, request, user_id):
+    # user_id sẽ được truyền từ trang khác đến trang này
+    # VD : http://127.0.0.1:8000/appointment/ab229a41-6535-4093-932e-19a89ae7b580
         form = AppointmentForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            user_id = "ab229a41-6535-4093-932e-19a89ae7b580"
+            appointment = form.save(commit=False)
+            appointment.user_id = user_id
+            appointment.save()
             return render(request, 'myapp/appointment.html', {'system_message' : "OK",'form': form})
         else:
             return render(request, 'myapp/appointment.html', {'system_message' : "Fill date and time please !",'form': form})
@@ -77,6 +85,12 @@ class AppointmentManageView(View):
         else:
             return render(request, 'myapp/appointment_manage.html')
         return render(request, 'myapp/appointment_manage.html',{'appointment_data' : appointment_data})
+
+
+
+
+
+
 home_page = HomePageView.as_view()
 face_shape_check = FaceShapeCheckView.as_view()
 hair_style_suggestions = HairStyleSuggestionsView.as_view()
