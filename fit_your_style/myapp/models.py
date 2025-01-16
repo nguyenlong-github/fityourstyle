@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 import uuid
+
+
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     last_name = models.CharField(max_length=30, verbose_name='名前')
@@ -56,3 +58,17 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment for {self.user} at {self.store} on {self.date} {self.time}"
+
+class StoreHours(models.Model):
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='store_hours', verbose_name='店名')
+    day_of_week = models.IntegerField(choices=[
+        (0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'), 
+        (3, 'Thursday'), (4, 'Friday'), (5, 'Saturday'), (6, 'Sunday')],
+        verbose_name='曜日'
+    )
+    opening_time = models.TimeField(verbose_name='開始時間')
+    closing_time = models.TimeField(verbose_name='終了時間')
+
+    def __str__(self):
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        return f"{self.store.name} - {days[self.day_of_week]}"

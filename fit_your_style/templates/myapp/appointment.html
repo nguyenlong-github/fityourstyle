@@ -16,9 +16,9 @@
         <div class="calendar">
             <h2>Calendar</h2>
             <form method="GET">
-                <p>{{system_message}}</p>
+                <p>{{ system_message }}</p>
                 {% if end_datetime %}
-                    <p> Just try again after {{end_datetime}}</p>
+                    <p>Just try again after {{ end_datetime }}</p>
                 {% endif %}
                 
                 <div class="calendar-widget">
@@ -26,27 +26,26 @@
                     <input id="appointment-date" name="appointment-date" type="Date">
                     <label for="appointment-time">Time</label>
                     <input id="appointment-time" name="appointment-time" type="time">
+                    <label for="appointment-store">Store</label>
+                    <select id="appointment-store" name="appointment-store" class="form-control">
+                        {% for store in stores %}
+                            <option value="{{ store.id }}">{{ store.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <button  class="btn-normal" id="btn-check-appoinment">Check</button>
+                <button class="btn-normal" id="btn-check-appoinment">Check</button>
             </form>
         </div>
 
         <!-- content -->
         <div class="upload">
             <h2>Upload</h2>
-
-            <!-- form -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
-                <!-- button -->
+                {{ form.as_p }}
                 <button class="btn-normal" id="btn-submit-appointment">Submit</button>
             </form>
         </div>
-        
-        
-        
-
     </div>
 </main>
 {% endblock %}
