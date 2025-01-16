@@ -1,73 +1,58 @@
-import uuid
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 import uuid
 
-
-class User(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    last_name = models.CharField(max_length=30, verbose_name='名前')
-    first_name = models.CharField(max_length=30, verbose_name='姓')
-    email = models.EmailField(max_length=254, verbose_name='メールアドレス')
-    address = models.CharField(max_length=100, null=True, blank=True, verbose_name='住所')
-    phone = models.CharField(max_length=15, null=True, blank=True, verbose_name='電話番号')
-    avatar = models.ImageField(upload_to='myapp/avatar', null=True, blank=True)
-    password = models.CharField(max_length=30, verbose_name='パスワード')
-    def __str__(self):
-        return f"{self.last_name} {self.first_name}"
-
-
-class User(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='USER_ID')
-    first_name = models.CharField(max_length=50, verbose_name='名')
-    last_name = models.CharField(max_length=50, verbose_name='姓')
-    user_name = models.CharField(max_length=50, verbose_name='ユーザー名')
-    password = models.CharField(max_length=50, verbose_name='パスワード')
-    email = models.EmailField(unique=True, verbose_name='メールアドレス')
-    avatar = models.ImageField(upload_to='picture/user_avatar', blank=True, null=True, verbose_name='アバター')
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name='電話番号')
-    date_of_birth = models.DateField(blank=True, null=True, verbose_name='生年月日')
-    created_at = models.DateTimeField(auto_now=True, verbose_name="作成日時")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")
+# Tạo CustomUser kế thừa từ AbstractUser
+class CustomUser(AbstractUser):
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"  
+        return f"{self.first_name} {self.last_name} ({self.username})"
 
+
+# Model Store
 class Store(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='STORE_ID')
-    name = models.CharField(max_length=100, verbose_name='店名')
-    owner = models.CharField(max_length=15, blank=True, null=True, verbose_name='店長')
-    address = models.TextField(verbose_name='住所')
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name='電話番号')
-    email = models.EmailField(blank=True, null=True, verbose_name='メールアドレス')
-    created_at = models.DateTimeField(auto_now=True, verbose_name="作成日時")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")
+    name = models.CharField(max_length=100, verbose_name='店名')  # Store name
+    owner = models.CharField(max_length=15, blank=True, null=True, verbose_name='店長')  # Store owner name
+    address = models.TextField(verbose_name='住所')  # Store address
+    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name='電話番号')  # Store phone number
+    email = models.EmailField(blank=True, null=True, verbose_name='メールアドレス')  # Store email
+    created_at = models.DateTimeField(auto_now=True, verbose_name="作成日時")  # Created date
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")  # Updated date
 
     def __str__(self):
         return self.name
 
+
+# Model Appointment
 class Appointment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='APPOINTMENT_ID')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments', verbose_name='ユーザー')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='appointments', verbose_name='ユーザー')  # Thay User bằng CustomUser
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='appointments', verbose_name='店名')
-    picture = models.ImageField(upload_to='picture/user_appointment', blank=True, null=True, verbose_name='写真')
-    date = models.DateField(verbose_name='日付')
-    time = models.TimeField(verbose_name='時刻')
-    message = models.TextField(blank=True, null=True, verbose_name='備考')
-    created_at = models.DateTimeField(auto_now=True, verbose_name="作成日時")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")
+    picture = models.ImageField(upload_to='picture/user_appointment', blank=True, null=True, verbose_name='写真')  # Appointment picture
+    date = models.DateField(verbose_name='日付')  # Appointment date
+    time = models.TimeField(verbose_name='時刻')  # Appointment time
+    message = models.TextField(blank=True, null=True, verbose_name='備考')  # Appointment message
+    created_at = models.DateTimeField(auto_now=True, verbose_name="作成日時")  # Created date
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")  # Updated date
 
     def __str__(self):
         return f"Appointment for {self.user} at {self.store} on {self.date} {self.time}"
 
+
+# Model StoreHours
 class StoreHours(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='store_hours', verbose_name='店名')
-    day_of_week = models.IntegerField(choices=[
-        (0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'), 
+    day_of_week = models.IntegerField(choices=[  # Store hours for each day of the week
+        (0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'),
         (3, 'Thursday'), (4, 'Friday'), (5, 'Saturday'), (6, 'Sunday')],
         verbose_name='曜日'
     )
-    opening_time = models.TimeField(verbose_name='開始時間')
-    closing_time = models.TimeField(verbose_name='終了時間')
+    opening_time = models.TimeField(verbose_name='開始時間')  # Opening time
+    closing_time = models.TimeField(verbose_name='終了時間')  # Closing time
 
     def __str__(self):
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

@@ -1,14 +1,13 @@
+<!-- templates/registration/login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    {% if form.errors %}
-        <p style="color: red;">{{ form.errors }}</p>
-    {% endif %}
+    <h2>Login</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

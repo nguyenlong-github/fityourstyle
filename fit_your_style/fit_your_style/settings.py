@@ -113,3 +113,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home_page/'
+# đây sẽ là nơi khi ấn logout sẽ quay lại
+LOGOUT_REDIRECT_URL = '/login/'
+
+AUTH_USER_MODEL = 'myapp.CustomUser'  # Đảm bảo thay thế 'your_app' bằng tên ứng dụng của bạn
+

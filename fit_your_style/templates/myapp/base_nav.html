@@ -41,6 +41,12 @@
       <!-- button -->
       <button class="btn-normal" id="btn-signup"><a href="#">SignUp</a></button>
       <button class="btn-normal" id="btn-login"><a href="#">Login</a></button>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="btn-normal" id="btn-logout">Logout</button>
+      </form>
+    
+
     </ul>
   </div>
 </nav>
