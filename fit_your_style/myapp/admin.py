@@ -1,7 +1,8 @@
 from django.contrib import admin
+from .models import CustomUser  
 from .models import Appointment, Store, StoreHours
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser  # Đảm bảo sử dụng CustomUser
+
 
 # Đăng ký CustomUser với admin
 class CustomUserAdmin(UserAdmin):
