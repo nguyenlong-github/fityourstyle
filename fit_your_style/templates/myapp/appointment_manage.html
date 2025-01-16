@@ -36,9 +36,9 @@
                 <div class="appointment-data">
                     <ul>
                         {% for appointment in appointment_data %}
-                        <li>Name: {{ appointment.name }} {{ appointment.surname }}</li>
-                        <li>Email: {{appointment.email}}</li>
-                        <li>Phone: {{appointment.phone}}</li>
+                        <li>Name: {{ appointment.user.first_name }} {{ appointment.user.last_name }}</li>
+                        <li>Email: {{appointment.user.email}}</li>
+                        <li>Phone: {{appointment.user.phone_number}}</li>
                         <li>Date: {{appointment.date}}</li>
                         <li>Time: {{appointment.time}}</li>
                         <li>Status: {{appointment.status}}</li>

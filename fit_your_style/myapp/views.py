@@ -79,6 +79,12 @@ class AppointmentManageView(View):
             try:
                 date = datetime.strptime(date_str,"%Y-%m-%d").date()
                 appointment_data = Appointment.objects.filter(date=date)
+                # user_firstname = appointment.user.user_firstname
+                # user_lastname = appointment.user.user_lastname
+                # user_username = appointment.user.user_name
+                # user_email = appointment.user.email
+                # user_phone = appointment.user.phone_number
+                
                 
             except ValueError:
                 appointment_data = [] # Ngay khong hop le
