@@ -40,7 +40,7 @@ class FaceShapeCheckView(LoginRequiredMixin, View):
         return JsonResponse(result)
 
     def save_uploaded_file(self, file):
-        upload_dir = 'uploads/'
+        upload_dir = 'media/myapp/picture/user_uploads'
         os.makedirs(upload_dir, exist_ok=True)
         file_path = os.path.join(upload_dir, file.name)
         with open(file_path, 'wb+') as destination:

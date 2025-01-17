@@ -1,9 +1,11 @@
 {% extends 'myapp/base.html' %}
+
 {% block main %}
-<!-- main -->
 <style>
     #content-1, #content-2, #content-3, #content-4 {
         border: 1px dashed rgb(0, 140, 255);
+        padding: 10px;
+        margin-bottom: 20px;
     }
 
     img.suggestion-img, img.searched-img {
@@ -12,45 +14,45 @@
         border-radius: 10px;
         border: 1px solid black;
     }
+
+    button {
+        margin: 5px;
+    }
 </style>
 
 <main id="hair_style_suggestions">
     <h1>Hair Style Suggestions</h1>
+
+    <!-- Gợi ý kiểu tóc -->
     <div class="container">
         <h2>Suggestion</h2>
 
-        <!-- suggestion -->
-        <div id="content-1" >
-            <!-- face-shape-img -->
-            <img style="
+        <div id="content-1">
+            <p>Select your face shape and gender to get hairstyle suggestions:</p>
+            <img id="face-shape-img" src="" alt="Face Shape" style="
                 width: 100px;
                 height: 100px;
                 border: 1px solid black;
-                border-radius: 10px;
-                "  
-            id="face-shape-img" src="" alt=""
-            >
+                border-radius: 10px;">
             <br>
-            <!-- gender -->
+            <!-- Gender selection -->
             <label>
-                <input type="radio" name="gender" value="male">
-                Male
+                <input type="radio" name="gender" value="male"> Male
             </label>
             <label>
-                <input type="radio" name="gender" value="female">
-                Female
+                <input type="radio" name="gender" value="female"> Female
             </label>
-            <!-- face-shape -->
-            <button class="btn-small" id="btn-oblong" >Oblong</button>
-            <button class="btn-small" id="btn-oval" >Oval</button>
-            <button class="btn-small" id="btn-heart" >Heart</button>
-            <button class="btn-small" id="btn-square" >Square</button>
-            <button class="btn-small" id="btn-round" >Round</button>
+            <br>
+            <!-- Face shape buttons -->
+            <button class="btn-small" data-face-shape="Oblong">Oblong</button>
+            <button class="btn-small" data-face-shape="Oval">Oval</button>
+            <button class="btn-small" data-face-shape="Heart">Heart</button>
+            <button class="btn-small" data-face-shape="Square">Square</button>
+            <button class="btn-small" data-face-shape="Round">Round</button>
         </div>
 
-        <!-- select-img -->
         <div id="content-2">
-            <p>This is for u </p>
+            <p>Suggested hairstyles for you:</p>
             <div class="suggestion-images">
                 <img class="suggestion-img" src="" alt="">
                 <img class="suggestion-img" src="" alt="">
@@ -60,61 +62,45 @@
                 <img class="suggestion-img" src="" alt="">
             </div>
         </div>
-
     </div>
 
+    <!-- Tìm kiếm kiểu tóc -->
     <h2>Search Hair Styles</h2>
     <div class="container">
-        <!-- search -->
         <div id="content-3">
-            <!-- gender -->
+            <p>Select gender and hair style category or search by keyword:</p>
             <label>
-                <input type="radio" name="gender" value="male">
-                Male
+                <input type="radio" name="gender-search" value="male"> Male
             </label>
             <label>
-                <input type="radio" name="gender" value="female">
-                Female
+                <input type="radio" name="gender-search" value="female"> Female
             </label>
             <br>
-            <!-- search by category -->
-            <div class="search" id="search-by-category" >
-                <!-- short -->
+            <div class="search" id="search-by-category">
                 <label>
-                    <input type="radio" name="hair-style" value="short">
-                    Short
+                    <input type="radio" name="hair-style" value="short"> Short
                 </label>
-                <!-- mid -->
                 <label>
-                    <input type="radio" name="hair-style" value="mid">
-                    Mid
+                    <input type="radio" name="hair-style" value="mid"> Mid
                 </label>
-                <!-- long -->
                 <label>
-                    <input type="radio" name="hair-style" value="long">
-                    Long
+                    <input type="radio" name="hair-style" value="long"> Long
                 </label>
-                <!-- perm -->
                 <label>
-                    <input type="radio" name="hair-style" value="Perm">
-                    Perm
+                    <input type="radio" name="hair-style" value="perm"> Perm
                 </label>
                 <br>
-                <!-- button -->
-                <button class="btn-normal" id="btn-search-by-category">Check</button>
+                <button id="btn-search-by-category">Check</button>
             </div>
             <br>
-
-            <!-- search-by-keyword -->
-            <div class="search" id="search-by-keyword" >
-                <input type="text" placeholder="Search" id="search">
-                <button class="btn-small" id="btn-search-by-keyword">Search</button>
+            <div class="search" id="search-by-keyword">
+                <input type="text" id="search" placeholder="Search">
+                <button id="btn-search-by-keyword">Search</button>
             </div>
         </div>
 
-        <!-- searched-images -->
         <div id="content-4">
-            <p>This is for u</p>
+            <p>Search results:</p>
             <div class="searched-images">
                 <img class="searched-img" src="" alt="">
                 <img class="searched-img" src="" alt="">
@@ -126,4 +112,67 @@
         </div>
     </div>
 </main>
+
+<script>
+    // Gợi ý kiểu tóc
+    document.querySelectorAll("#content-1 .btn-small").forEach(button => {
+        button.addEventListener("click", () => {
+            const faceShape = button.getAttribute("data-face-shape");
+            const gender = document.querySelector("input[name='gender']:checked");
+            if (!gender) {
+                alert("Please select a gender.");
+                return;
+            }
+            // Fetch suggestions (mock data for now)
+            const suggestions = getSuggestions(faceShape, gender.value);
+            updateSuggestions(suggestions);
+        });
+    });
+
+    // Tìm kiếm kiểu tóc
+    document.getElementById("btn-search-by-category").addEventListener("click", () => {
+        const gender = document.querySelector("input[name='gender-search']:checked");
+        const hairStyle = document.querySelector("input[name='hair-style']:checked");
+        if (!gender || !hairStyle) {
+            alert("Please select both gender and hair style category.");
+            return;
+        }
+        const results = searchByCategory(gender.value, hairStyle.value);
+        updateSearchResults(results);
+    });
+
+    document.getElementById("btn-search-by-keyword").addEventListener("click", () => {
+        const keyword = document.getElementById("search").value.trim();
+        if (!keyword) {
+            alert("Please enter a keyword to search.");
+            return;
+        }
+        const results = searchByKeyword(keyword);
+        updateSearchResults(results);
+    });
+
+    // Mock functions to simulate API calls
+    function getSuggestions(faceShape, gender) {
+        return [`${faceShape}_${gender}_1.jpg`, `${faceShape}_${gender}_2.jpg`];
+    }
+
+    function searchByCategory(gender, hairStyle) {
+        return [`${gender}_${hairStyle}_1.jpg`, `${gender}_${hairStyle}_2.jpg`];
+    }
+
+    function searchByKeyword(keyword) {
+        return [`${keyword}_1.jpg`, `${keyword}_2.jpg`];
+    }
+
+    // Update DOM functions
+    function updateSuggestions(images) {
+        const container = document.querySelector(".suggestion-images");
+        container.innerHTML = images.map(src => `<img class="suggestion-img" src="${src}" alt="Suggested">`).join("");
+    }
+
+    function updateSearchResults(images) {
+        const container = document.querySelector(".searched-images");
+        container.innerHTML = images.map(src => `<img class="searched-img" src="${src}" alt="Result">`).join("");
+    }
+</script>
 {% endblock %}

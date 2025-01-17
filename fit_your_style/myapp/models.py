@@ -4,7 +4,7 @@ import uuid
 
 # Tạo CustomUser kế thừa từ AbstractUser
 class CustomUser(AbstractUser):
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='myapp/picture/user_avatar', blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
 
@@ -32,7 +32,7 @@ class Appointment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='APPOINTMENT_ID')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='appointments', verbose_name='ユーザー')  # Thay User bằng CustomUser
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='appointments', verbose_name='店名')
-    picture = models.ImageField(upload_to='picture/user_appointment', blank=True, null=True, verbose_name='写真')  # Appointment picture
+    picture = models.ImageField(upload_to='myapp/picture/user_appointment', blank=True, null=True, verbose_name='写真')  # Appointment picture
     date = models.DateField(verbose_name='日付')  # Appointment date
     time = models.TimeField(verbose_name='時刻')  # Appointment time
     message = models.TextField(blank=True, null=True, verbose_name='備考')  # Appointment message
