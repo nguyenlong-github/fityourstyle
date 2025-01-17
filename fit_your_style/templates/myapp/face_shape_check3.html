@@ -1,0 +1,97 @@
+{% extends 'myapp/base.html' %}
+
+{% block main %}
+<h1>Face Shape Check</h1>
+
+<!-- Form tải lên hình ảnh -->
+<form method="post" enctype="multipart/form-data" id="face-shape-form">
+    {% csrf_token %}
+    <div>
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<!-- Hiển thị kết quả -->
+<div id="result" style="margin-top: 20px;">
+    <h2>Result:</h2>
+    <p id="predicted-label">Predicted Face Shape: <span id="label"></span></p>
+
+    <!-- Hiển thị biểu đồ -->
+    <div id="content-2">
+        <div class="chart" style="
+                width: 300px;
+                height: fit-content;
+                border: 1px solid black;
+                border-radius: 10px;">
+            <!-- Các thanh biểu đồ -->
+            <div id="chart-container"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Xử lý form gửi ảnh qua AJAX
+    document.getElementById('face-shape-form').onsubmit = async function(event) {
+        event.preventDefault(); // Ngăn form gửi theo cách truyền thống
+
+        const formData = new FormData(this);
+
+        // Gửi dữ liệu qua AJAX
+        try {
+            const response = await fetch("", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("An error occurred while processing the image.");
+            }
+
+            const data = await response.json();
+
+            // Cập nhật kết quả vào trang
+            document.getElementById('label').innerText = data.predicted_label || "Unknown";
+            
+            // Cập nhật biểu đồ
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = ""; // Xóa nội dung cũ
+
+            if (data.predictions) {
+                Object.entries(data.predictions).forEach(([label, percentage]) => {
+                    // Tạo thanh biểu đồ
+                    const progressContainer = document.createElement('div');
+                    progressContainer.style.marginBottom = '10px';
+
+                    const labelElem = document.createElement('label');
+                    labelElem.innerText = label;
+                    labelElem.setAttribute('for', label);
+
+                    const progress = document.createElement('progress');
+                    progress.id = label;
+                    progress.value = percentage;
+                    progress.max = 100;
+
+                    const percentageElem = document.createElement('span');
+                    percentageElem.className = 'percentage';
+                    percentageElem.innerText = ` ${percentage.toFixed(2)}%`;
+
+                    // Thêm các thành phần vào container
+                    progressContainer.appendChild(labelElem);
+                    progressContainer.appendChild(progress);
+                    progressContainer.appendChild(percentageElem);
+
+                    // Thêm vào biểu đồ
+                    chartContainer.appendChild(progressContainer);
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Failed to process the image. Please try again.");
+        }
+    };
+</script>
+{% endblock %}
