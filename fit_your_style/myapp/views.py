@@ -25,12 +25,6 @@ class VirtualHairstyleView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'myapp/virtual_hairstyle.html')
 
-import cv2
-import mediapipe as mp
-import numpy as np
-from django.http import StreamingHttpResponse
-from PIL import Image
-
 class HairFilter:
     def __init__(self):
         self.mp_face_mesh = mp.solutions.face_mesh

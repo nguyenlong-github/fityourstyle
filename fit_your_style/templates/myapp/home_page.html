@@ -1,85 +1,192 @@
 {% extends 'myapp/base.html' %}
-{% block main %}
-<!-- main -->
-<style>
-    .sub-page {
-        border: 1px dashed rgb(0, 106, 255);
-    }
-    img {
-        border-radius: 10px;
-        border: 1px solid black;
-        width: 100px;
-        height: 100px;
 
-        
-    }
+{% block main %}
+<style>
+  /* Tổng thể */
+  body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e8f7f0; /* Màu nền xanh mint nhạt */
+      color: #2d3436;
+      line-height: 1.6;
+  }
+
+  h1, h2 {
+      text-align: center;
+      color: #16a085; /* Màu xanh mint đậm */
+  }
+
+  a {
+      text-decoration: none;
+      color: #16a085;
+      transition: color 0.3s ease;
+  }
+
+  a:hover {
+      color: #0e6655;
+  }
+
+  main {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+  }
+
+  /* Container chính */
+  .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+  }
+
+  /* Các mục con */
+  .sub-page {
+      flex: 1 1 calc(50% - 20px);
+      background: #ffffff;
+      border: 2px solid #a3d5c3; /* Viền xanh mint nhạt */
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .sub-page:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      background-color: #f6fffa; /* Màu nền khi hover */
+  }
+
+  .sub-page h2 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: #1abc9c;
+  }
+
+  .sub-page p {
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      color: #636e72;
+  }
+
+  .sub-page .btn-normal {
+      display: inline-block;
+      background: #1abc9c; /* Nút màu xanh mint đậm */
+      color: #ffffff;
+      padding: 10px 25px;
+      border-radius: 30px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: bold;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .sub-page .btn-normal:hover {
+      background: #16a085;
+      transform: translateY(-2px);
+  }
+
+  /* Hình ảnh */
+  .sub-page .images {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+  }
+
+  .sub-page .images img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%; /* Hình ảnh tròn */
+      border: 2px solid #a3d5c3;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+  }
+
+  .sub-page .images img:hover {
+      transform: scale(1.1); /* Hiệu ứng zoom khi hover */
+  }
+
+  /* Phản hồi màn hình nhỏ */
+  @media (max-width: 768px) {
+      .sub-page {
+          flex: 1 1 100%;
+      }
+
+      .container {
+          flex-direction: column;
+          gap: 15px;
+      }
+  }
+
+  
+  
 </style>
+  
+
 <main id="home_page">
-<h1>Home Page</h1>
+    <h1>Home Page</h1>
+
     <div class="container">
-        <!-- face-shape-check -->
+
         <div class="sub-page" id="face-shape-check">
             <div class="content">
                 <h2><a href="{% url 'myapp:face_shape_check' %}">Face shape check</a></h2>
                 <p>Introduce...</p>
-                <a href="{% url 'myapp:face_shape_check' %}"  class="btn-normal">始まる-></a>
+                <a href="{% url 'myapp:face_shape_check' %}" class="btn-normal">始まる-></a>
             </div>
-            
-            <!-- images -->
             <div class="images">
-                <img src="#" alt="">
-                <img src="#" alt="">
+                <img src="#" alt="Face Shape Example 1">
+                <img src="#" alt="Face Shape Example 2">
             </div>
         </div>
 
-        <!-- suggestions -->
         <div class="sub-page" id="suggestions">
             <div class="content">
                 <h2><a href="{% url 'myapp:hair_style_suggestions' %}">Hair Style Suggestions</a></h2>
                 <p>Introduce...</p>
                 <a href="{% url 'myapp:hair_style_suggestions' %}" class="btn-normal">始まる-></a>
             </div>
-            
-            <!-- images -->
             <div class="images">
-                <img src="#" alt="">
-                <img src="#" alt="">
+                <img src="#" alt="Hair Style Suggestion 1">
+                <img src="#" alt="Hair Style Suggestion 2">
             </div>
         </div>
-        
-        <!-- virtual-hairstyle -->
+
         <div class="sub-page" id="virtual-hairstyle">
             <div class="content">
                 <h2><a href="{% url 'myapp:virtual_hairstyle' %}">Virtual Hairstyle</a></h2>
                 <p>Introduce...</p>
                 <a href="{% url 'myapp:virtual_hairstyle' %}" class="btn-normal">始まる-></a>
             </div>
-            
-            <!-- images -->
             <div class="images">
-                <img src="#" alt="">
-                <img src="#" alt="">
+                <img src="#" alt="Virtual Hairstyle 1">
+                <img src="#" alt="Virtual Hairstyle 2">
             </div>
         </div>
 
-        <!-- appointment -->
         <div class="sub-page" id="appointment">
             <div class="content">
                 <h2><a href="{% url 'myapp:appointment' %}">Appointment</a></h2>
                 <p>Introduce...</p>
                 <a href="{% url 'myapp:appointment' %}" class="btn-normal">始まる-></a>
             </div>
-            
-            <!-- images -->
             <div class="images">
-                <img src="#" alt="">
-                <img src="#" alt="">
-                
+                <img src="#" alt="Appointment Example 1">
+                <img src="#" alt="Appointment Example 2">
             </div>
         </div>
-        
-        
-        
+
     </div>
 </main>
+
 {% endblock %}

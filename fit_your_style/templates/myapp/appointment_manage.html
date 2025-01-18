@@ -2,16 +2,119 @@
 {% block main %}
 <!-- main -->
 <style>
-    .calendar, .content, .appointment-data, .appointment-img{
-        border: 1.5px dashed rgb(14, 116, 226);
+    /* General Styling */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        color: #333;
     }
-    #appointment-img{
-        width: 100px;
-        height: 100px;
+  
+    h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin: 20px 0;
+        color: #444;
+    }
+  
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
         border-radius: 10px;
-        border: 1px solid black;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-</style>
+  
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #555;
+    }
+  
+    p, li {
+        margin: 10px 0;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+  
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        font-size: 1rem;
+    }
+  
+    input[type="date"], .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+  
+    button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 0;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+  
+    button:hover {
+        background-color: #0056b3;
+    }
+  
+    .appointment {
+        margin-top: 20px;
+    }
+  
+    .appointment ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+  
+    .appointment li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+  
+    .appointment img {
+        display: block;
+        margin: 10px 0;
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    .appointment li:last-child {
+        border-bottom: none;
+    }
+  
+    /* Responsive Styling */
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+  
+        h1 {
+            font-size: 2rem;
+        }
+  
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+  </style>
+  
 
 <main>
     <h1>Appointment Manage</h1>
