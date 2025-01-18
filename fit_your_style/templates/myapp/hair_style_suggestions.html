@@ -29,7 +29,7 @@
 
         <div id="content-1">
             <p>Select your face shape and gender to get hairstyle suggestions:</p>
-            <img id="face-shape-img" src="" alt="Face Shape" style="
+            <img id="face-shape-img" src="fit_your_style/media/myapp/picture/website/face_shape.jpg" alt="Face Shape" style="
                 width: 100px;
                 height: 100px;
                 border: 1px solid black;
@@ -44,11 +44,11 @@
             </label>
             <br>
             <!-- Face shape buttons -->
-            <button class="btn-small" data-face-shape="Oblong">Oblong</button>
-            <button class="btn-small" data-face-shape="Oval">Oval</button>
-            <button class="btn-small" data-face-shape="Heart">Heart</button>
-            <button class="btn-small" data-face-shape="Square">Square</button>
-            <button class="btn-small" data-face-shape="Round">Round</button>
+            <button class="btn-small" data-face-shape="oblong">Oblong</button>
+            <button class="btn-small" data-face-shape="oval">Oval</button>
+            <button class="btn-small" data-face-shape="heart">Heart</button>
+            <button class="btn-small" data-face-shape="square">Square</button>
+            <button class="btn-small" data-face-shape="round">Round</button>
         </div>
 
         <div id="content-2">
@@ -64,53 +64,6 @@
         </div>
     </div>
 
-    <!-- Tìm kiếm kiểu tóc -->
-    <h2>Search Hair Styles</h2>
-    <div class="container">
-        <div id="content-3">
-            <p>Select gender and hair style category or search by keyword:</p>
-            <label>
-                <input type="radio" name="gender-search" value="male"> Male
-            </label>
-            <label>
-                <input type="radio" name="gender-search" value="female"> Female
-            </label>
-            <br>
-            <div class="search" id="search-by-category">
-                <label>
-                    <input type="radio" name="hair-style" value="short"> Short
-                </label>
-                <label>
-                    <input type="radio" name="hair-style" value="mid"> Mid
-                </label>
-                <label>
-                    <input type="radio" name="hair-style" value="long"> Long
-                </label>
-                <label>
-                    <input type="radio" name="hair-style" value="perm"> Perm
-                </label>
-                <br>
-                <button id="btn-search-by-category">Check</button>
-            </div>
-            <br>
-            <div class="search" id="search-by-keyword">
-                <input type="text" id="search" placeholder="Search">
-                <button id="btn-search-by-keyword">Search</button>
-            </div>
-        </div>
-
-        <div id="content-4">
-            <p>Search results:</p>
-            <div class="searched-images">
-                <img class="searched-img" src="" alt="">
-                <img class="searched-img" src="" alt="">
-                <img class="searched-img" src="" alt="">
-                <img class="searched-img" src="" alt="">
-                <img class="searched-img" src="" alt="">
-                <img class="searched-img" src="" alt="">
-            </div>
-        </div>
-    </div>
 </main>
 
 <script>
@@ -129,50 +82,17 @@
         });
     });
 
-    // Tìm kiếm kiểu tóc
-    document.getElementById("btn-search-by-category").addEventListener("click", () => {
-        const gender = document.querySelector("input[name='gender-search']:checked");
-        const hairStyle = document.querySelector("input[name='hair-style']:checked");
-        if (!gender || !hairStyle) {
-            alert("Please select both gender and hair style category.");
-            return;
-        }
-        const results = searchByCategory(gender.value, hairStyle.value);
-        updateSearchResults(results);
-    });
-
-    document.getElementById("btn-search-by-keyword").addEventListener("click", () => {
-        const keyword = document.getElementById("search").value.trim();
-        if (!keyword) {
-            alert("Please enter a keyword to search.");
-            return;
-        }
-        const results = searchByKeyword(keyword);
-        updateSearchResults(results);
-    });
-
     // Mock functions to simulate API calls
     function getSuggestions(faceShape, gender) {
-        return [`${faceShape}_${gender}_1.jpg`, `${faceShape}_${gender}_2.jpg`];
+        return [`${faceShape}_${gender}_1.jpg`, `${faceShape}_${gender}_2.jpg`, `${faceShape}_${gender}_3.jpg`, `${faceShape}_${gender}_4.jpg`, `${faceShape}_${gender}_5.jpg`, `${faceShape}_${gender}_6.jpg`];
     }
-
-    function searchByCategory(gender, hairStyle) {
-        return [`${gender}_${hairStyle}_1.jpg`, `${gender}_${hairStyle}_2.jpg`];
-    }
-
-    function searchByKeyword(keyword) {
-        return [`${keyword}_1.jpg`, `${keyword}_2.jpg`];
-    }
-
     // Update DOM functions
     function updateSuggestions(images) {
         const container = document.querySelector(".suggestion-images");
-        container.innerHTML = images.map(src => `<img class="suggestion-img" src="${src}" alt="Suggested">`).join("");
-    }
-
-    function updateSearchResults(images) {
-        const container = document.querySelector(".searched-images");
-        container.innerHTML = images.map(src => `<img class="searched-img" src="${src}" alt="Result">`).join("");
+        container.innerHTML = images.map(src => 
+            `<a href="/media/myapp/picture/suggest/${src}" download="${src}">
+                <img class="suggestion-img" src="/media/myapp/picture/suggest/${src}" alt="Suggested">
+            </a>`).join("");
     }
 </script>
 {% endblock %}

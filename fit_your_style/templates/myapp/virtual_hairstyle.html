@@ -1,5 +1,8 @@
 {% extends 'myapp/base.html' %}
 {% block main %}
-<!-- main -->
-<h1>Virtural Hairstyle</h1>
+<h1>Virtual Hairstyle</h1>
+
+<!-- Video Stream -->
+<img src="{% url 'myapp:video_feed' %}" width="100%" height="auto" />
+
 {% endblock %}

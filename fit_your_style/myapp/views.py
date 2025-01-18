@@ -14,6 +14,177 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+# VirtualHairstyle Import
+from django.http import StreamingHttpResponse
+from PIL import Image
+import mediapipe as mp
+import math
+
+# Virtual Hairstyle View for displaying the page
+class VirtualHairstyleView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'myapp/virtual_hairstyle.html')
+
+import cv2
+import mediapipe as mp
+import numpy as np
+from django.http import StreamingHttpResponse
+from PIL import Image
+
+class HairFilter:
+    def __init__(self):
+        self.mp_face_mesh = mp.solutions.face_mesh
+        self.face_mesh = self.mp_face_mesh.FaceMesh(
+            max_num_faces=1,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5
+        )
+
+        # Load ảnh tóc với PIL và chuyển sang RGBA mode
+        self.hair_styles = {}
+        try:
+            pil_image1 = Image.open('myapp/static/hairstyles/hairstyle1.png').convert('RGBA')
+            pil_image2 = Image.open('myapp/static/hairstyles/hairstyle2.png').convert('RGBA')
+
+
+            # Chuyển từ PIL sang numpy array
+            self.hair_styles['style1'] = np.array(pil_image1)
+            self.hair_styles['style2'] = np.array(pil_image2)
+
+            print("Loaded images with shapes:", 
+                self.hair_styles['style1'].shape,
+                self.hair_styles['style2'].shape)
+        except Exception as e:
+            print(f"Error loading hairstyle images: {e}")
+
+        self.current_style = 'style1'
+
+        # Hệ số điều chỉnh kích thước và vị trí
+        self.hair_scale_factors = {'style1': 1.65, 'style2': 2.13}
+        self.hair_position_offsets = {
+            'style1': {'x_offset': 0, 'y_offset': -10},
+            'style2': {'x_offset': -10, 'y_offset': 60}
+        }
+
+        self.x_offset = self.hair_position_offsets[self.current_style]['x_offset']
+        self.y_offset = self.hair_position_offsets[self.current_style]['y_offset']
+        self.scale_factor = self.hair_scale_factors[self.current_style]
+
+    def overlay_image_alpha(self, img, img_overlay, pos, alpha_mask):
+        """Chồng một ảnh PNG có alpha channel lên ảnh gốc"""
+        x, y = pos
+        y1, y2 = max(0, y), min(img.shape[0], y + img_overlay.shape[0])
+        x1, x2 = max(0, x), min(img.shape[1], x + img_overlay.shape[1])
+
+        if y1 >= y2 or x1 >= x2:
+            return
+
+        img_overlay_crop = img_overlay[y1-y:y2-y, x1-x:x2-x]
+        alpha = alpha_mask[y1-y:y2-y, x1-x:x2-x]
+        img_crop = img[y1:y2, x1:x2]
+
+        alpha_3d = np.stack([alpha] * 3, axis=2) / 255.0
+        comp = img_overlay_crop.astype(float) * alpha_3d + img_crop.astype(float) * (1.0 - alpha_3d)
+        img[y1:y2, x1:x2] = comp.astype(np.uint8)
+
+    def calculate_head_tilt_angle(self, face_landmarks):
+        """Tính góc nghiêng đầu"""
+        temple_left = face_landmarks.landmark[447]
+        temple_right = face_landmarks.landmark[227]
+        dx = temple_right.x - temple_left.x
+        dy = temple_right.y - temple_left.y
+        angle = math.atan2(dy, dx) * 180 / math.pi
+        return angle
+
+    def apply_hair(self, frame):
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.face_mesh.process(rgb_frame)
+
+        if results.multi_face_landmarks:
+            for face_landmarks in results.multi_face_landmarks:
+                ih, iw, _ = frame.shape
+                head_angle = self.calculate_head_tilt_angle(face_landmarks)
+
+                temple_left = face_landmarks.landmark[447]
+                temple_right = face_landmarks.landmark[227]
+                top_head = face_landmarks.landmark[10]
+                face_width = int(abs(temple_right.x - temple_left.x) * iw * self.scale_factor)
+                
+                center_x = int((temple_left.x + temple_right.x) * iw / 2) + self.x_offset
+                center_y = int(top_head.y * ih) + self.y_offset
+                
+                hair_img = self.hair_styles[self.current_style]
+                if hair_img is not None:
+                    scale = face_width / hair_img.shape[1]
+                    scaled_hair = cv2.resize(hair_img, None, fx=scale, fy=scale)
+                    rotated_hair = cv2.rotate(scaled_hair, cv2.ROTATE_180)
+
+                    M = cv2.getRotationMatrix2D((rotated_hair.shape[1] // 2, rotated_hair.shape[0] // 2), -head_angle, 1)
+                    rotated_hair = cv2.warpAffine(rotated_hair, M, (rotated_hair.shape[1], rotated_hair.shape[0]))
+                    
+                    pos_x = center_x - rotated_hair.shape[1] // 2
+                    pos_y = center_y - rotated_hair.shape[0] // 2
+                    
+                    hair_rgb = rotated_hair[:, :, :3]
+                    alpha = rotated_hair[:, :, 3]
+                    hair_bgr = cv2.cvtColor(hair_rgb, cv2.COLOR_RGB2BGR)
+                    self.overlay_image_alpha(frame, hair_bgr, (pos_x, pos_y), alpha)
+
+    def change_style(self):
+        styles = list(self.hair_styles.keys())
+        current_idx = styles.index(self.current_style)
+        self.current_style = styles[(current_idx + 1) % len(styles)]
+
+        self.scale_factor = self.hair_scale_factors.get(self.current_style, 1.65)
+        self.x_offset = self.hair_position_offsets.get(self.current_style, {}).get('x_offset', 0)
+        self.y_offset = self.hair_position_offsets.get(self.current_style, {}).get('y_offset', -10)
+
+    def adjust_hair_position(self, key):
+        if key == ord('w'):
+            self.y_offset -= 5
+        elif key == ord('s'):
+            self.y_offset += 5
+        elif key == ord('a'):
+            self.x_offset -= 5
+        elif key == ord('d'):
+            self.x_offset += 5
+        elif key == ord('k'):
+            self.scale_factor += 0.1
+        elif key == ord('j'):
+            self.scale_factor -= 0.1
+
+def gen_frames():
+    cap = cv2.VideoCapture(0)
+    hair_filter = HairFilter()
+
+    while True:
+        ret, frame = cap.read()
+        frame = cv2.flip(frame, 1)
+        if not ret:
+            break
+
+        try:
+            hair_filter.apply_hair(frame)
+        except Exception as e:
+            print(f"Error applying hair filter: {e}")
+
+        _, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()
+
+        yield (b'--frame\r\n'
+            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+    cap.release()
+
+def video_feed(request):
+    return StreamingHttpResponse(gen_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+
+
+
+
+
 
 # HomePageView
 class HomePageView(View):
@@ -75,10 +246,6 @@ class HairStyleSuggestionsView(View):
     def get(self, request):
         return render(request, 'myapp/hair_style_suggestions.html')
 
-# VirtualHairstyleView
-class VirtualHairstyleView(LoginRequiredMixin,View):
-    def get(self, request):
-        return render(request, 'myapp/virtual_hairstyle.html')
 
 # AppointmentView
 class AppointmentView(LoginRequiredMixin, View):
