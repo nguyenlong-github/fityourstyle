@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@600&display=swap');
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #34495e;
+    --accent-color: #16a085;
+    --background: #f5f6fa;
+    --text-color: #2c3e50;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --gradient: linear-gradient(135deg, #4a90e2 0%, #16a085 100%);
+}
+
+body {
+    font-family: 'Commissioner', sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.calendar, .upload {
+    background-color: #fff;
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+    padding: 20px;
+    width: 48%;
+}
+
+.calendar h2, .upload h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form .form-control {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form .form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+button.btn-normal {
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: center;
+}
+
+button.btn-normal:hover {
+    background-color: darken(var(--accent-color), 10%);
+    transform: translateY(-2px);
+}
+
+button.btn-normal:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* Error message styles */
+p {
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .calendar, .upload {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

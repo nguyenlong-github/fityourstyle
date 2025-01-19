@@ -56,7 +56,7 @@ class HairFilter:
         # Hệ số điều chỉnh kích thước và vị trí
         self.hair_scale_factors = {'style1': 1.65, 'style2': 2.13}
         self.hair_position_offsets = {
-            'style1': {'x_offset': 0, 'y_offset': -10},
+            'style1': {'x_offset': 0, 'y_offset': 4},
             'style2': {'x_offset': -10, 'y_offset': 60}
         }
 

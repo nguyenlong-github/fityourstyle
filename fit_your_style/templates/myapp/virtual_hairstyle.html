@@ -1,48 +1,8 @@
 {% extends 'myapp/base.html' %}
 {% block main %}
 <h1>Virtual Hairstyle</h1>
-<style>
-    /* General Styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-  
-    h1 {
-      text-align: center;
-      font-size: 2.5rem;
-      margin: 20px 0;
-      color: #444;
-    }
-  
-    /* Video Stream Styling */
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin: 20px auto;
-      border: 3px solid #ddd;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-  
-    /* Responsive Styling */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-  
-      img {
-        margin: 10px auto;
-      }
-    }
-  </style>
-  
 
 <!-- Video Stream -->
-<img src="{% url 'myapp:video_feed' %}" width="100%" height="auto" />
+<img src="{% url 'myapp:video_feed' %}" width="300px" height="250px" />
 
 {% endblock %}

@@ -1,45 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-  <style></style>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- title -->
-    <title>{% block title %}ホームページ{% endblock %}</title>
-    <!-- css -->
-  </head>
-  <!-- debug css  -->
-  <style>
-    body{
-      margin: 0;
-      font-family: monospace;
-    }
-    main {
-      border: 1px dashed rgb(0, 102, 255);
-    }
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Title -->
+  <title>{% block title %}ホームページ{% endblock %}</title>
+  {% load static %}
+  <!-- Link to CSS (if any) -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+</head>
 
-    ul{
-      list-style-type: none;
-    }
-
-    a{
-      color:black;
-      text-decoration: none;
-    }
-    a:visited{
-      color:purple
-    }
-  </style>
-  <body>
-
-
-    <!-- navbar -->
+<body>
+  <header>
+    <!-- Navbar -->
     {% include 'myapp/base_nav.html' %}
+  </header>
 
-    <!-- main -->
-    {% block main %}{% endblock %}
+  <!-- Main Content -->
+  {% block main %}{% endblock %}
 
-    <!-- footer -->
-    {% include 'myapp/base_footer.html' %}
-  </body>
+  <!-- Footer -->
+  {% include 'myapp/base_footer.html' %}
+</body>
 </html>

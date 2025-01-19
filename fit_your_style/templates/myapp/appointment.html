@@ -1,115 +1,24 @@
 {% extends 'myapp/base.html' %}
-{% block main %}
-<!-- main -->
-<!-- <style>
-    /* General Styling */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-        color: #333;
-    }
-  
-    h1 {
-        text-align: center;
-        font-size: 2.5rem;
-        margin: 20px 0;
-        color: #444;
-    }
-  
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-  
-    h2 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        color: #555;
-    }
-  
-    p {
-        margin: 10px 0;
-        font-size: 1rem;
-        line-height: 1.5;
-    }
-  
-    label {
-        display: block;
-        margin: 10px 0 5px;
-        font-size: 1rem;
-    }
-  
-    select, input[type="date"], input[type="time"], input[type="file"], .form-control {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-        box-sizing: border-box;
-    }
-  
-    button {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 5px 0;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-    }
-  
-    button:hover {
-        background-color: #0056b3;
-    }
-  
-    .calendar, .upload {
-        margin-bottom: 30px;
-    }
-  
-    .calendar-widget {
-        display: grid;
-        gap: 10px;
-    }
-  
-    /* Responsive Styling */
-    @media (max-width: 768px) {
-        .container {
-            padding: 15px;
-        }
-  
-        h1 {
-            font-size: 2rem;
-        }
-  
-        h2 {
-            font-size: 1.5rem;
-        }
-    }
-  </style>
-   -->
 
+{% block main %}
+<!-- Main Content -->
 <main>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/appointment.css' %}">
     <h1>Appointment</h1>
     <div class="container">
-        <!-- calendar -->
+
+        <!-- Calendar Section -->
         <div class="calendar">
             <h2>Calendar</h2>
             <form method="GET">
-                <p>{{system_message}}</p>
-                {% if end_datetime %}
-                    <p> Just try again after {{end_datetime}}</p>
-                {% endif %}
+                <p>{{ system_message }}</p>
                 
+                {% if end_datetime %}
+                    <p>Just try again after {{ end_datetime }}</p>
+                {% endif %}
+
+                <!-- Calendar Widget -->
                 <div class="calendar-widget">
                     <label for="appointment-store">Store</label>
                     <select id="appointment-store" name="appointment-store" class="form-control">
@@ -117,30 +26,31 @@
                             <option value="{{ store.id }}">{{ store.name }}</option>
                         {% endfor %}
                     </select>
+
                     <label for="appointment-date">Date</label>
-                    <input id="appointment-date" name="appointment-date" type="Date">
+                    <input id="appointment-date" name="appointment-date" type="date" class="form-control">
+
                     <label for="appointment-time">Time</label>
-                    <input id="appointment-time" name="appointment-time" type="time">
+                    <input id="appointment-time" name="appointment-time" type="time" class="form-control">
                 </div>
-                <button class="btn-normal" id="btn-check-appointment">Check</button>
-            </form>            
+
+                <button class="btn-normal" id="btn-check-appointment" type="submit">Check</button>
+            </form>
         </div>
 
-        <!-- content -->
+        <!-- Upload Section -->
         <div class="upload">
             <h2>Upload</h2>
 
-            <!-- form -->
+            <!-- Upload Form -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
-                <!-- button -->
-                <button class="btn-normal" id="btn-submit-appointment">Submit</button>
+                {{ form.as_p }}
+
+                <!-- Submit Button -->
+                <button class="btn-normal" id="btn-submit-appointment" type="submit">Submit</button>
             </form>
         </div>
-        
-        
-        
 
     </div>
 </main>

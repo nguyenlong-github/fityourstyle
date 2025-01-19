@@ -1,110 +1,6 @@
 {% extends 'myapp/base.html' %}
 
 {% block main %}
-<style>
-    /* General Styles */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-        color: #333;
-    }
-  
-    h1 {
-        text-align: center;
-        margin: 20px 0;
-        font-size: 2.5rem;
-        color: #444;
-    }
-  
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-  
-    #content-1, #content-2 {
-        border: 1px dashed rgb(0, 140, 255);
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        background-color: #f3f9ff;
-    }
-  
-    p {
-        margin: 10px 0;
-        font-size: 1rem;
-        line-height: 1.5;
-    }
-  
-    label {
-        margin-right: 10px;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-  
-    input[type="radio"] {
-        margin-right: 5px;
-    }
-  
-    button {
-        padding: 8px 15px;
-        margin: 5px;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-    }
-  
-    button:hover {
-        background-color: #0056b3;
-    }
-  
-    img.suggestion-img {
-        width: 120px;
-        height: 120px;
-        border-radius: 10px;
-        border: 2px solid #ddd;
-        margin: 5px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-  
-    img.suggestion-img:hover {
-        transform: scale(1.1);
-        border-color: #007BFF;
-    }
-  
-    .suggestion-images {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
-    }
-  
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        button {
-            font-size: 0.9rem;
-            padding: 7px 12px;
-        }
-  
-        img.suggestion-img {
-            width: 100px;
-            height: 100px;
-        }
-    }
-  </style>
-  
-
 <main id="hair_style_suggestions">
     <h1>Hair Style Suggestions</h1>
 
@@ -114,11 +10,7 @@
 
         <div id="content-1">
             <p>Select your face shape and gender to get hairstyle suggestions:</p>
-            <img id="face-shape-img" src="fit_your_style/media/myapp/picture/website/face_shape.jpg" alt="Face Shape" style="
-                width: 100px;
-                height: 100px;
-                border: 1px solid black;
-                border-radius: 10px;">
+            <img id="face-shape-img" src="fit_your_style/media/myapp/picture/website/face_shape.jpg" alt="Face Shape" style="width: 100px; height: 100px; border: 1px solid black; border-radius: 10px;">
             <br>
             <!-- Gender selection -->
             <label>
@@ -139,13 +31,15 @@
         <div id="content-2">
             <p>Suggested hairstyles for you:</p>
             <div class="suggestion-images">
-                <img class="suggestion-img" src="" alt="">
-                <img class="suggestion-img" src="" alt="">
-                <img class="suggestion-img" src="" alt="">
-                <img class="suggestion-img" src="" alt="">
-                <img class="suggestion-img" src="" alt="">
-                <img class="suggestion-img" src="" alt="">
+                <img class="suggestion-img" src="" alt="Suggested Hairstyle 1">
+                <img class="suggestion-img" src="" alt="Suggested Hairstyle 2">
+                <img class="suggestion-img" src="" alt="Suggested Hairstyle 3">
+                <img class="suggestion-img" src="" alt="Suggested Hairstyle 4">
+                <img class="suggestion-img" src="" alt="Suggested Hairstyle 5">
+                <img class="suggestion-img" src="" alt="Suggested Hairstyle 6">
             </div>
+            <div id="loading-spinner" style="display:none;">Loading...</div>
+            <div id="no-suggestions" style="display:none;">No hairstyle suggestions available.</div>
         </div>
     </div>
 
@@ -161,23 +55,44 @@
                 alert("Please select a gender.");
                 return;
             }
+
+            // Hiển thị spinner khi đang tải dữ liệu
+            document.getElementById('loading-spinner').style.display = 'block';
+            document.getElementById('no-suggestions').style.display = 'none';
+
             // Fetch suggestions (mock data for now)
-            const suggestions = getSuggestions(faceShape, gender.value);
-            updateSuggestions(suggestions);
+            setTimeout(() => {  // Giả lập một yêu cầu API với thời gian chờ
+                const suggestions = getSuggestions(faceShape, gender.value);
+                updateSuggestions(suggestions);
+                document.getElementById('loading-spinner').style.display = 'none';
+            }, 1000);
         });
     });
 
     // Mock functions to simulate API calls
     function getSuggestions(faceShape, gender) {
+        // Tạo ra danh sách ảnh dựa trên hình dạng mặt và giới tính
         return [`${faceShape}_${gender}_1.jpg`, `${faceShape}_${gender}_2.jpg`, `${faceShape}_${gender}_3.jpg`, `${faceShape}_${gender}_4.jpg`, `${faceShape}_${gender}_5.jpg`, `${faceShape}_${gender}_6.jpg`];
     }
-    // Update DOM functions
+
+    // Cập nhật gợi ý lên DOM
     function updateSuggestions(images) {
         const container = document.querySelector(".suggestion-images");
-        container.innerHTML = images.map(src => 
-            `<a href="/media/myapp/picture/suggest/${src}" download="${src}">
-                <img class="suggestion-img" src="/media/myapp/picture/suggest/${src}" alt="Suggested">
-            </a>`).join("");
+        container.innerHTML = "";  // Xóa ảnh cũ trước khi thêm ảnh mới
+
+        if (images.length > 0) {
+            images.forEach(src => {
+                const imgElement = document.createElement('img');
+                imgElement.className = 'suggestion-img';
+                imgElement.src = `/media/myapp/picture/suggest/${src}`;
+                imgElement.alt = 'Suggested Hairstyle';
+                container.appendChild(imgElement);
+            });
+            document.getElementById('no-suggestions').style.display = 'none';
+        } else {
+            document.getElementById('no-suggestions').style.display = 'block';
+        }
     }
 </script>
+
 {% endblock %}

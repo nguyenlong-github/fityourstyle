@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@600&display=swap');
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #34495e;
+    --accent-color: #16a085;
+    --background: #f5f6fa;
+    --text-color: #2c3e50;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --gradient: linear-gradient(135deg, #4a90e2 0%, #16a085 100%);
+}
+
+body {
+    font-family: 'Commissioner', sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6; /* Improves readability */
+}
+
+.logo a {
+    padding: 20px 0 0 20px;
+    display: flex;
+    background-color: var(--secondary-color);
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+
+
+ul {
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    display: flex;
+    
+    align-items: center;
+    background-color: var(--secondary-color);
+    flex-wrap: wrap; /* Helps make the nav bar responsive */
+}
+
+ul li {
+    position: relative;
+}
+
+ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px; /* Adds padding for better clickability */
+    transition: background-color 0.3s ease;
+}
+
+ul li a:hover,
+ul li a:focus {
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+ul .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--secondary-color);
+    min-width: 160px;
+    box-shadow: var(--shadow);
+    z-index: 1;
+    top: 100%; /* Ensures it appears below the parent */
+}
+
+ul .dropdown:hover .dropdown-content {
+    display: block;
+    border-radius: 10px;
+}
+
+ul .dropdown-content li a {
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+ul .dropdown-content li a:hover {
+    background-color: var(--primary-color);
+    border-radius: 10px
+}
+
+#btn-login, #btn-logout {
+    
+    padding: 15px 25px;
+    margin: 5px;
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#btn-login:hover, #btn-logout:hover {
+    background-color: darken(var(--accent-color), 10%);
+    transform: translateY(-2px); /* Adds a small lift effect on hover */
+}
+
+#btn-login:focus, #btn-logout:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--primary-color); /* Adds focus outline for accessibility */
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    .logo a {
+        font-size: 1.5rem; /* Smaller font size on mobile */
+    }
+
+    ul {
+        flex-direction: column; /* Stacks the menu items on smaller screens */
+        align-items: stretch;
+    }
+
+    ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+}
