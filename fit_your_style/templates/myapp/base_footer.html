@@ -1,8 +1,47 @@
 <!-- footer -->
+<style>
+    footer {
+    background-color: #34495e;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Commissioner', sans-serif;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #4a90e2;
+}
+
+/* Responsive: Make footer text stack vertically on smaller screens */
+@media (max-width: 768px) {
+    footer p {
+        font-size: 0.9rem;
+    }
+}
+
+</style>
 <footer>
-    <p>&copy; 2024 NGUYEN HAI LONG, ECCコンピュータ専門学校</p>
+    <p>&copy; 2024 NGUYEN HAI LONG - ECCコンピュータ専門学校</p>
     <p>
         <a href="https://github.com/nguyenlong-github" target="_blank" rel="noopener noreferrer">About Me</a> |
-        <a href="/" >HOME</a>
+        <a href="/" >HOME |</a>
+        <a href="{% url 'myapp:face_shape_check' %}">  Face Shape Check  |</a>
+        <a href="{% url 'myapp:hair_style_suggestions' %}">  Hair Style Suggestions  |</a>
+        <a href="{% url 'myapp:virtual_hairstyle' %}">  Virtual Hairstyle  |</a>
+        <a href="{% url 'myapp:appointment' %}">  Appointment  |</a>
+
     </p>
 </footer>

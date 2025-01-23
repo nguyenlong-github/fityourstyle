@@ -1,42 +1,84 @@
 {% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="{% static 'css/base_nav.css' %}">
 
-<!-- logo -->
-<div class="logo">
-  <a href="{% url 'myapp:home_page' %}">FitYourStyle</a>
-</div>
+<header>
+  <input type="checkbox" name="" id="toggler">
+  <label for="toggler" ><i class="fa-solid fa-bars"></i></label>
 
-<!-- navigation links -->
-<ul>
-  <li><a href="{% url 'myapp:home_page' %}">Home Page</a></li>
-  
-  <!-- Service Dropdown -->
-  <li class="dropdown">
-    <a href="#" class="dropbtn">Service</a>
-    <ul class="dropdown-content">
-      <li><a href="{% url 'myapp:face_shape_check' %}">Face Shape Check</a></li>
-      <li><a href="{% url 'myapp:hair_style_suggestions' %}">Hair Style Suggestions</a></li>
-      <li><a href="{% url 'myapp:virtual_hairstyle' %}">Virtual Hairstyle</a></li>
-      <li><a href="{% url 'myapp:appointment_manage' %}">Appointment Manage</a></li>
-      <li><a href="{% url 'myapp:appointment' %}">Appointment</a></li>
-    </ul>
-  </li>
 
-  
-  
-  <!-- Buttons -->
-  <li>
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <button id="btn-login">Login</button>
-    </form>
-  </li>
-  
-  <!-- Logout form -->
-  <li>
-    <form method="post" action="{% url 'logout' %}">
-      {% csrf_token %}
-      <button id="btn-logout">Logout</button>
-    </form>
-  </li>
-</ul>
+  <!-- LOGO -->
+  <div class="logo">
+    <a href="{% url 'myapp:home_page' %}">FitYourStyle</a>
+  </div>
+  <!-- END LOGO -->
+
+  <!-- NAVIGATIONS -->
+  <nav class="navbar">
+    <a href="{% url 'myapp:home_page' %}">Home Page</a>
+    <div class="dropdown">
+      <a href="#">Service</a>
+      <div class="dropdown-content">
+        <a href="{% url 'myapp:face_shape_check' %}">Face Shape Check</a>
+        <a href="{% url 'myapp:hair_style_suggestions' %}">Hair Style Suggestions</a>
+        <a href="{% url 'myapp:virtual_hairstyle' %}">Virtual Hairstyle</a>
+        <a href="{% url 'myapp:appointment' %}">Appointment</a>
+      </div>
+    </div>
+  </nav>
+  <!-- END NAVIGATIONS -->
+    
+    
+    <!-- BUTTONS -->
+    <div class="button">
+      <!-- ICONS -->
+      <div class="icons" id="user-icon">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <!-- Dropdown Menu -->
+      <div class="user-dropdown">
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <button id="btn-login">Login</button>
+        </form>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button id="btn-logout">Logout</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- END BUTTONS -->
+    
+
+
+</header>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const userIcon = document.getElementById("user-icon");
+  const buttonWrapper = document.querySelector(".button");
+
+  userIcon.addEventListener("click", function () {
+    buttonWrapper.classList.toggle("active");
+  });
+
+  // Ẩn dropdown khi nhấn bên ngoài
+  document.addEventListener("click", function (event) {
+    if (!buttonWrapper.contains(event.target)) {
+      buttonWrapper.classList.remove("active");
+    }
+  });
+
+  // Dropdown menu cho navbar khi nhấn vào icon
+  const toggler = document.getElementById("toggler");
+  const navbar = document.querySelector(".navbar");
+
+  toggler.addEventListener("change", function() {
+    navbar.style.display = toggler.checked ? 'block' : 'none';
+  });
+});
+
+
+</script>
+

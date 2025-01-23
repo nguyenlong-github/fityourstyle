@@ -25,6 +25,15 @@ class VirtualHairstyleView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'myapp/virtual_hairstyle.html')
 
+from django.http import JsonResponse, StreamingHttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import cv2
+import mediapipe as mp
+import numpy as np
+from PIL import Image
+import math
+
+# Khởi tạo một instance của HairFilter để sử dụng chung
 class HairFilter:
     def __init__(self):
         self.mp_face_mesh = mp.solutions.face_mesh
@@ -39,7 +48,6 @@ class HairFilter:
         try:
             pil_image1 = Image.open('myapp/static/hairstyles/hairstyle1.png').convert('RGBA')
             pil_image2 = Image.open('myapp/static/hairstyles/hairstyle2.png').convert('RGBA')
-
 
             # Chuyển từ PIL sang numpy array
             self.hair_styles['style1'] = np.array(pil_image1)
@@ -124,15 +132,6 @@ class HairFilter:
                     hair_bgr = cv2.cvtColor(hair_rgb, cv2.COLOR_RGB2BGR)
                     self.overlay_image_alpha(frame, hair_bgr, (pos_x, pos_y), alpha)
 
-    def change_style(self):
-        styles = list(self.hair_styles.keys())
-        current_idx = styles.index(self.current_style)
-        self.current_style = styles[(current_idx + 1) % len(styles)]
-
-        self.scale_factor = self.hair_scale_factors.get(self.current_style, 1.65)
-        self.x_offset = self.hair_position_offsets.get(self.current_style, {}).get('x_offset', 0)
-        self.y_offset = self.hair_position_offsets.get(self.current_style, {}).get('y_offset', -10)
-
     def adjust_hair_position(self, key):
         if key == ord('w'):
             self.y_offset -= 5
@@ -147,31 +146,70 @@ class HairFilter:
         elif key == ord('j'):
             self.scale_factor -= 0.1
 
-def gen_frames():
-    cap = cv2.VideoCapture(0)
-    hair_filter = HairFilter()
+    def change_style(self):
+        styles = list(self.hair_styles.keys())
+        current_idx = styles.index(self.current_style)
+        self.current_style = styles[(current_idx + 1) % len(styles)]
 
-    while True:
-        ret, frame = cap.read()
-        frame = cv2.flip(frame, 1)
-        if not ret:
-            break
+        self.scale_factor = self.hair_scale_factors.get(self.current_style, 1.65)
+        self.x_offset = self.hair_position_offsets.get(self.current_style, {}).get('x_offset', 0)
+        self.y_offset = self.hair_position_offsets.get(self.current_style, {}).get('y_offset', -10)
 
-        try:
-            hair_filter.apply_hair(frame)
-        except Exception as e:
-            print(f"Error applying hair filter: {e}")
 
-        _, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
+# Tạo một instance của HairFilter để sử dụng chung
+hair_filter_instance = HairFilter()
 
-        yield (b'--frame\r\n'
-            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+# View để xử lý yêu cầu điều chỉnh vị trí và kiểu tóc
+@csrf_exempt
+def adjust_hair_position(request):
+    global hair_filter_instance
+    if request.method == 'GET':
+        action = request.GET.get('action', None)
+        if action:
+            # Gọi hàm adjust_hair_position hoặc change_style tương ứng với action
+            if action == 'up':
+                hair_filter_instance.adjust_hair_position(ord('w'))  # Tương ứng với phím 'w'
+            elif action == 'down':
+                hair_filter_instance.adjust_hair_position(ord('s'))  # Tương ứng với phím 's'
+            elif action == 'left':
+                hair_filter_instance.adjust_hair_position(ord('a'))  # Tương ứng với phím 'a'
+            elif action == 'right':
+                hair_filter_instance.adjust_hair_position(ord('d'))  # Tương ứng với phím 'd'
+            elif action == 'change_style':
+                hair_filter_instance.change_style()  # Đổi kiểu tóc
 
-    cap.release()
+            return JsonResponse({'status': 'success', 'action': action})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'No action provided'}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
+# View để hiển thị video stream
 def video_feed(request):
+    def gen_frames():
+        cap = cv2.VideoCapture(0)
+        while True:
+            ret, frame = cap.read()
+            frame = cv2.flip(frame, 1)
+            if not ret:
+                break
+
+            try:
+                hair_filter_instance.apply_hair(frame)
+            except Exception as e:
+                print(f"Error applying hair filter: {e}")
+
+            _, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+        cap.release()
+
     return StreamingHttpResponse(gen_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
+
 
 
 

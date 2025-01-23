@@ -6,8 +6,28 @@
     <link rel="stylesheet" href="{% static 'css/face_shape_check.css' %}">
 <h1>Face Shape Check</h1>
 
+<!-- Hiển thị kết quả -->
+<div id="result" style="margin-top: 20px;">
+    <h2>Result:</h2>
+    <p id="predicted-label">Predicted Face Shape: <span id="label"></span></p>
+
+    <!-- Hiển thị biểu đồ -->
+    <div id="content-2">
+        <div class="chart">
+            <!-- Các thanh biểu đồ -->
+            <div id="chart-container"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading spinner -->
+<div id="loading-spinner">
+    <p style="font-size: 25px;">Processing...</p>
+    <p style="font-size: 25px;">そうそうお待ちください ⌛ ...   </p>
+</div>
+
 <!-- Form tải lên hình ảnh -->
-<form method="post" enctype="multipart/form-data" id="face-shape-form">
+<form id="face-shape-form" method="post" enctype="multipart/form-data" >
     {% csrf_token %}
     <div>
         <label for="image">Upload Image:</label>
@@ -18,29 +38,7 @@
     </div>
 </form>
 
-<!-- Hiển thị kết quả -->
-<div id="result" style="margin-top: 20px;">
-    <h2>Result:</h2>
-    <p id="predicted-label">Predicted Face Shape: <span id="label"></span></p>
 
-    <!-- Hiển thị biểu đồ -->
-    <div id="content-2">
-        <div class="chart" style="
-                width: 300px;
-                height: fit-content;
-                border: 1px solid black;
-                border-radius: 10px;">
-            <!-- Các thanh biểu đồ -->
-            <div id="chart-container"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Loading spinner -->
-<div id="loading-spinner">
-    <p>Processing...</p>
-    <img src="https://www.example.com/spinner.gif" alt="Loading" />
-</div>
 
 <script>
     // Xử lý form gửi ảnh qua AJAX

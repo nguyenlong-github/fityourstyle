@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@600&display=swap');
 body {
+    
     background-color: var(--background);
     color: var(--text-color);
     font-family: 'Inter', sans-serif;

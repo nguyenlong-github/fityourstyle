@@ -11,6 +11,7 @@ urlpatterns = [
     #
     path('virtual_hairstyle/', views.VirtualHairstyleView.as_view(), name='virtual_hairstyle'),
     path('video_feed/', views.video_feed, name='video_feed'),
+    path('adjust_hair_position/', views.adjust_hair_position, name='adjust_hair_position'),
     #
     path('appointment/', views.appointment, name='appointment'),
     path('appointment_manage/', views.appointment_manage, name='appointment_manage'),

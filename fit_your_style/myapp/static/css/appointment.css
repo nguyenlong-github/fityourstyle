@@ -19,6 +19,12 @@ body {
     line-height: 1.6;
 }
 
+h1{
+    margin-top: 40px;
+    font-size: x-large;
+}
+
+
 h1, h2 {
     color: var(--primary-color);
     text-align: center;
@@ -28,6 +34,7 @@ h1, h2 {
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    margin-bottom: 50px;
 }
 
 .calendar, .upload {
@@ -83,10 +90,7 @@ button.btn-normal:focus {
 }
 
 /* Error message styles */
-p {
-    color: var(--secondary-color);
-    text-align: center;
-}
+
 
 /* Responsive Media Queries */
 @media (max-width: 768px) {

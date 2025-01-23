@@ -1,126 +1,127 @@
-@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@600&display=swap');
+/* Căn chỉnh chung */
 
-:root {
-    --primary-color: #4a90e2;
-    --secondary-color: #34495e;
-    --accent-color: #16a085;
-    --background: #f5f6fa;
-    --text-color: #2c3e50;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --gradient: linear-gradient(135deg, #4a90e2 0%, #16a085 100%);
-}
 
-body {
-    font-family: 'Commissioner', sans-serif;
-    background-color: var(--background);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-}
-
+/* Tiêu đề */
 h1 {
     text-align: center;
-    color: var(--primary-color);
+    color: #2e9bce;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-size:x-large;
 }
 
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    max-width: 500px;
-    margin: 0 auto;
+/* Form upload */
+form#face-shape-form {
+    height: 50vh;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
 }
 
-form div {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-form label {
-    font-size: 1.2rem;
-}
-
-form input[type="file"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-form button {
-    padding: 10px 20px;
-    background-color: var(--accent-color);
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    align-self: center;
-}
-
-form button:hover {
-    background-color: darken(var(--accent-color), 10%);
-    transform: translateY(-2px);
-}
-
-form button:focus {
-    outline: none;
-    box-shadow: 0 0 5px var(--primary-color);
-}
-
-/* Hiển thị kết quả */
-#result {
-    margin-top: 30px;
-    display: none;
-    text-align: center;
-}
-
-#result h2 {
-    color: var(--primary-color);
-}
-
-#predicted-label {
-    font-size: 1.2rem;
+form#face-shape-form label {
     font-weight: bold;
 }
 
+form#face-shape-form input[type="file"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form#face-shape-form button {
+    padding: 10px 20px;
+    background-color: #2e9bce;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form#face-shape-form button:hover {
+    background-color: #2e9bce;
+}
+
+/* Kết quả */
+#result {
+    max-width: 600px;
+    margin: 50px auto 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#result h2 {
+    text-align: center;
+    color: #333;
+}
+
+#result p {
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Biểu đồ */
 #content-2 {
     margin-top: 20px;
 }
 
 .chart {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 10px;
 }
 
 #chart-container {
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
+/* Thanh biểu đồ */
 #chart-container div {
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#chart-container label {
+    min-width: 100px;
+    font-weight: bold;
+    color: #555;
 }
 
 #chart-container progress {
     width: 100%;
     height: 20px;
-    margin-top: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    appearance: none;
+    background-color: #e0e0e0;
+}
+
+#chart-container progress::-webkit-progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+#chart-container progress::-webkit-progress-value {
+    background-color: #2e9bce;
+    border-radius: 5px;
 }
 
 #chart-container .percentage {
-    font-size: 0.9rem;
-    color: #555;
-    margin-left: 10px;
+    font-weight: bold;
+    color: #333;
 }
 
-/* Loading Spinner */
+/* Loading spinner */
 #loading-spinner {
     display: none;
     text-align: center;
@@ -132,14 +133,4 @@ form button:focus {
     height: 50px;
 }
 
-/* Responsive Media Queries */
-@media (max-width: 768px) {
-    form {
-        width: 90%;
-        padding: 15px;
-    }
-    
-    #result {
-        width: 90%;
-    }
-}
+

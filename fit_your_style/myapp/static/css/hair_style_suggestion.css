@@ -1,0 +1,130 @@
+/* Tổng quan */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Tiêu đề chính */
+h1 {
+    text-align: center;
+    color: #2e9bce;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    font-size:x-large;
+}
+
+/* Container chính */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề phụ */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Nội dung phần chọn */
+#content-1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#content-1 p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Nút bấm chọn */
+.btn-small {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #2e9bce;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-small:hover {
+    background-color: #2e9bce;
+}
+
+/* Radio button */
+input[type="radio"] {
+    margin: 0 5px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Nội dung phần gợi ý */
+#content-2 {
+    text-align: center;
+}
+
+#content-2 p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Vùng hiển thị ảnh */
+.suggestion-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.suggestion-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.suggestion-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading spinner */
+#loading-spinner {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+}
+
+#loading-spinner::after {
+    content: "⏳";
+    margin-left: 5px;
+}
+
+/* Không có gợi ý */
+#no-suggestions {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 50px;
+}

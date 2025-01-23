@@ -1,49 +1,49 @@
 {% extends 'myapp/base.html' %}
 
 {% block main %}
-<main id="hair_style_suggestions">
-    <h1>Hair Style Suggestions</h1>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/hair_style_suggestion.css' %}">
+<h1>Hair Style Suggestions</h1>
+<!-- Gợi ý kiểu tóc -->
+<div class="container">
+    <h2>Suggestion</h2>
 
-    <!-- Gợi ý kiểu tóc -->
-    <div class="container">
-        <h2>Suggestion</h2>
-
-        <div id="content-1">
-            <p>Select your face shape and gender to get hairstyle suggestions:</p>
-            <img id="face-shape-img" src="fit_your_style/media/myapp/picture/website/face_shape.jpg" alt="Face Shape" style="width: 100px; height: 100px; border: 1px solid black; border-radius: 10px;">
-            <br>
-            <!-- Gender selection -->
-            <label>
-                <input type="radio" name="gender" value="male"> Male
-            </label>
-            <label>
-                <input type="radio" name="gender" value="female"> Female
-            </label>
-            <br>
-            <!-- Face shape buttons -->
-            <button class="btn-small" data-face-shape="oblong">Oblong</button>
-            <button class="btn-small" data-face-shape="oval">Oval</button>
-            <button class="btn-small" data-face-shape="heart">Heart</button>
-            <button class="btn-small" data-face-shape="square">Square</button>
-            <button class="btn-small" data-face-shape="round">Round</button>
-        </div>
-
-        <div id="content-2">
-            <p>Suggested hairstyles for you:</p>
-            <div class="suggestion-images">
-                <img class="suggestion-img" src="" alt="Suggested Hairstyle 1">
-                <img class="suggestion-img" src="" alt="Suggested Hairstyle 2">
-                <img class="suggestion-img" src="" alt="Suggested Hairstyle 3">
-                <img class="suggestion-img" src="" alt="Suggested Hairstyle 4">
-                <img class="suggestion-img" src="" alt="Suggested Hairstyle 5">
-                <img class="suggestion-img" src="" alt="Suggested Hairstyle 6">
-            </div>
-            <div id="loading-spinner" style="display:none;">Loading...</div>
-            <div id="no-suggestions" style="display:none;">No hairstyle suggestions available.</div>
-        </div>
+    <div id="content-1">
+        <p>Select your face shape and gender to get hairstyle suggestions:</p>
+        <!-- <img id="face-shape-img" src="fit_your_style/media/myapp/picture/website/face_shape.jpg" alt="Face Shape" style="width: 100px; height: 100px; border: 1px solid black; border-radius: 10px;">
+        <br> -->
+        <!-- Gender selection -->
+        <label>
+            <input type="radio" name="gender" value="male"> Male
+        </label>
+        <label>
+            <input type="radio" name="gender" value="female"> Female
+        </label>
+        <br>
+        <!-- Face shape buttons -->
+        <button class="btn-small" data-face-shape="oblong">Oblong</button>
+        <button class="btn-small" data-face-shape="oval">Oval</button>
+        <button class="btn-small" data-face-shape="heart">Heart</button>
+        <button class="btn-small" data-face-shape="square">Square</button>
+        <button class="btn-small" data-face-shape="round">Round</button>
     </div>
 
-</main>
+    <div id="content-2">
+        <p>Suggested hairstyles for you:</p>
+        <div class="suggestion-images" style="display: none;">
+            <img class="suggestion-img" src="" alt="Suggested Hairstyle 1">
+            <img class="suggestion-img" src="" alt="Suggested Hairstyle 2">
+            <img class="suggestion-img" src="" alt="Suggested Hairstyle 3">
+            <img class="suggestion-img" src="" alt="Suggested Hairstyle 4">
+            <img class="suggestion-img" src="" alt="Suggested Hairstyle 5">
+            <img class="suggestion-img" src="" alt="Suggested Hairstyle 6">
+        </div>
+        <div id="loading-spinner" style="display:none;">Loading...</div>
+        <div id="no-suggestions" style="display:none;">No hairstyle suggestions available.</div>
+    </div>
+</div>
+
+
 
 <script>
     // Gợi ý kiểu tóc
@@ -76,23 +76,44 @@
     }
 
     // Cập nhật gợi ý lên DOM
-    function updateSuggestions(images) {
-        const container = document.querySelector(".suggestion-images");
-        container.innerHTML = "";  // Xóa ảnh cũ trước khi thêm ảnh mới
+    // Cập nhật gợi ý lên DOM
+function updateSuggestions(images) {
+    const container = document.querySelector(".suggestion-images");
+    container.innerHTML = ""; // Xóa ảnh cũ trước khi thêm ảnh mới
 
-        if (images.length > 0) {
-            images.forEach(src => {
-                const imgElement = document.createElement('img');
-                imgElement.className = 'suggestion-img';
-                imgElement.src = `/media/myapp/picture/suggest/${src}`;
-                imgElement.alt = 'Suggested Hairstyle';
-                container.appendChild(imgElement);
+    if (images.length > 0) {
+        // Hiển thị vùng suggestion-images
+        container.style.display = 'flex';
+
+        images.forEach(src => {
+            const imgElement = document.createElement('img');
+            imgElement.className = 'suggestion-img';
+            imgElement.src = `/media/myapp/picture/suggest/${src}`;
+            imgElement.alt = 'Suggested Hairstyle';
+
+            // Thêm sự kiện tải ảnh khi nhấp
+            imgElement.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.href = imgElement.src; // URL của ảnh
+                link.download = src; // Tên tệp tải xuống
+                link.click(); // Kích hoạt tải xuống
             });
-            document.getElementById('no-suggestions').style.display = 'none';
-        } else {
-            document.getElementById('no-suggestions').style.display = 'block';
-        }
+
+            container.appendChild(imgElement);
+        });
+
+        // Ẩn thông báo "No suggestions"
+        document.getElementById('no-suggestions').style.display = 'none';
+    } else {
+        // Ẩn vùng suggestion-images nếu không có ảnh
+        container.style.display = 'none';
+
+        // Hiển thị thông báo "No suggestions"
+        document.getElementById('no-suggestions').style.display = 'block';
     }
+}
+
+
 </script>
 
 {% endblock %}

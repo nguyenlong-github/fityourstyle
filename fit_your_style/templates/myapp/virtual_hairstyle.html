@@ -1,8 +1,64 @@
 {% extends 'myapp/base.html' %}
 {% block main %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/virtual_hairstyle.css' %}">
 <h1>Virtual Hairstyle</h1>
+<div class="content">
+    <!-- Right section: Function buttons -->
+    <div class="function-section">
+        <div class="controller">
+            <button id="btn-up" class="btn-control">🔼</button>
+            <button id="btn-left" class="btn-control">◀️</button>
+            <button style=" visibility: hidden;" id="btn-refresh" class="btn-control">🔄</button>
+            <button id="btn-right" class="btn-control">▶️</button>
+            <button id="btn-down" class="btn-control">🔽</button>
+            <button id="btn-change-style" class="btn-control">Change Style</button>
+        </div>
+    </div>
 
-<!-- Video Stream -->
-<img src="{% url 'myapp:video_feed' %}" width="300px" height="250px" />
+    <!-- Left section: Image -->
+    <div class="image-section">
+        <img src="{% url 'myapp:video_feed' %}" width="400px" height="350px" alt="Video Stream"/>
+    </div>
+</div>
 
+<script>
+    // Gửi yêu cầu AJAX khi nhấn nút
+    document.getElementById('btn-up').addEventListener('click', function() {
+        sendAdjustmentRequest('up');
+    });
+
+    document.getElementById('btn-down').addEventListener('click', function() {
+        sendAdjustmentRequest('down');
+    });
+
+    document.getElementById('btn-left').addEventListener('click', function() {
+        sendAdjustmentRequest('left');
+    });
+
+    document.getElementById('btn-right').addEventListener('click', function() {
+        sendAdjustmentRequest('right');
+    });
+
+    document.getElementById('btn-refresh').addEventListener('click', function() {
+        sendAdjustmentRequest('refresh');
+    });
+
+    document.getElementById('btn-change-style').addEventListener('click', function() {
+        sendAdjustmentRequest('change_style');
+    });
+
+    function sendAdjustmentRequest(action) {
+        fetch(`/adjust_hair_position/?action=${action}`, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 {% endblock %}

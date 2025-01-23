@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Title -->
   <title>{% block title %}ホームページ{% endblock %}</title>
   {% load static %}
-  <!-- Link to CSS (if any) -->
   <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 </head>
 
 <body>
-  <header>
     <!-- Navbar -->
     {% include 'myapp/base_nav.html' %}
-  </header>
 
-  <!-- Main Content -->
-  {% block main %}{% endblock %}
+    <!-- Main Content -->
+    {% block main %}{% endblock %}
 
-  <!-- Footer -->
-  {% include 'myapp/base_footer.html' %}
+    <!-- Footer -->
+    {% include 'myapp/base_footer.html' %}
 </body>
 </html>
