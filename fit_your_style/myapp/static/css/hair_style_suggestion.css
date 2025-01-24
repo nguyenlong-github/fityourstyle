@@ -12,8 +12,8 @@ h1 {
     color: #2e9bce;
     margin-bottom: 20px;
     margin-top: 30px;
-    font-size:x-large;
-}
+    font-size: 50px;
+    }
 
 /* Container chính */
 .container {
@@ -27,6 +27,7 @@ h1 {
 
 /* Tiêu đề phụ */
 h2 {
+    font-size: 25px;
     text-align: center;
     margin-bottom: 20px;
     color: #333;
@@ -68,7 +69,7 @@ input[type="radio"] {
 
 label {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 20px;
     color: #555;
 }
 
@@ -78,7 +79,7 @@ label {
 }
 
 #content-2 p {
-    font-size: 16px;
+    font-size: 20px;
     color: #333;
     margin-bottom: 10px;
 }
@@ -92,8 +93,8 @@ label {
 }
 
 .suggestion-img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-radius: 10px;
     object-fit: cover;
     border: 1px solid #ddd;
@@ -126,5 +127,5 @@ label {
 }
 
 footer {
-    margin-top: 50px;
+    margin-top: 350px;
 }

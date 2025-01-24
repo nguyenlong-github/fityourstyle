@@ -3,11 +3,18 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+
+}
+
+.fa-solid {
+    padding:0;
 }
 h1 {    
     margin-top: 30px;
     text-align: center;
     font-size: x-large;
+    color: rgb(27, 163, 201);
+    font-size: 50px;
 }
 
 .image-section {
@@ -15,6 +22,12 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+img{
+    background-color: rgb(173, 200, 249);
+    padding: 10px;
+    border-radius: 10px;
+    
 }
 
 .function-section {
@@ -31,6 +44,12 @@ h1 {
     gap: 10px;
     justify-items: center;
     align-items: center;
+}
+p {
+    margin-top: 80px;
+    margin-left: 200px;
+    position: relative;
+    font-size: 20px;
 }
 
 #btn-up {
@@ -59,15 +78,27 @@ h1 {
 }
 
 .btn-control {
-    padding: 10px;
+    padding: 40px;
     font-size: 20px;
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
     transition: background-color 0.3s ease;
+    /* Shadow cơ bản */
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3); 
+    transition: box-shadow 0.3s ease; /* Hiệu ứng chuyển đổi bóng */
 }
 
 .btn-control:hover {
-    background-color: #e0e0e0;
+    background-color: #78aaec;
+}
+
+.btn-control:active {
+    /* Shadow khi nhấn */
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6); 
+}
+
+footer {
+    margin-top: 300px;
 }

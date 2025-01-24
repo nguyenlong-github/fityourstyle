@@ -252,7 +252,7 @@ class FaceShapeCheckView(LoginRequiredMixin, View):
         return file_path
 
     def process_image(self, image_path):
-        model = tf.keras.models.load_model('ai_model/model.keras')
+        model = tf.keras.models.load_model('ai_model/model1.keras')
         image = cv2.imread(image_path)
         if image is None:
             raise FileNotFoundError(f"Không tìm thấy ảnh tại đường dẫn: {image_path}")

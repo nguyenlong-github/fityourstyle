@@ -20,8 +20,15 @@ body {
 }
 
 h1{
+    font-size: 40px;
     margin-top: 40px;
-    font-size: x-large;
+    
+}
+h2{
+    font-size: 30px;
+}
+form{
+    font-size: 20px;
 }
 
 
@@ -54,6 +61,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    text-align: center;
 }
 
 form .form-control {
@@ -89,6 +97,9 @@ button.btn-normal:focus {
     box-shadow: 0 0 5px var(--primary-color);
 }
 
+footer {
+    margin-top: 20px;
+}
 /* Error message styles */
 
 

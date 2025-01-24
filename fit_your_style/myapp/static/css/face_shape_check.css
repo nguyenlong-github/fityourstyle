@@ -5,9 +5,9 @@
 h1 {
     text-align: center;
     color: #2e9bce;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
     margin-top: 50px;
-    font-size:x-large;
+    font-size: 50px;
 }
 
 /* Form upload */
@@ -28,6 +28,10 @@ form#face-shape-form input[type="file"] {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+button{
+    margin-top: 20px;
 }
 
 form#face-shape-form button {
@@ -56,11 +60,17 @@ form#face-shape-form button:hover {
 }
 
 #result h2 {
+    font-size: 25px;
     text-align: center;
     color: #333;
 }
 
+label{
+    font-size: 18px;
+}
+
 #result p {
+    font-size: 20px;
     margin: 10px 0;
     text-align: center;
 }

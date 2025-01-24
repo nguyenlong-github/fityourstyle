@@ -3,22 +3,27 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/virtual_hairstyle.css' %}">
 <h1>Virtual Hairstyle</h1>
+<p>
+    push up/down/left/right to adjust the image <br>
+    and press <i class="fa-solid fa-repeat"></i> to change the hairstyle
+</p>
 <div class="content">
     <!-- Right section: Function buttons -->
     <div class="function-section">
+        
         <div class="controller">
-            <button id="btn-up" class="btn-control">🔼</button>
-            <button id="btn-left" class="btn-control">◀️</button>
+            <button id="btn-up" class="btn-control"><i class="fa-solid fa-arrow-up"></i></button>
+            <button id="btn-left" class="btn-control"><i class="fa-solid fa-arrow-left"></i></button>
             <button style=" visibility: hidden;" id="btn-refresh" class="btn-control">🔄</button>
-            <button id="btn-right" class="btn-control">▶️</button>
-            <button id="btn-down" class="btn-control">🔽</button>
-            <button id="btn-change-style" class="btn-control">Change Style</button>
+            <button id="btn-right" class="btn-control"><i class="fa-solid fa-arrow-right"></i></button>
+            <button id="btn-down" class="btn-control"><i class="fa-solid fa-arrow-down"></i></button>
+            <button id="btn-change-style" class="btn-control"><i class="fa-solid fa-repeat"></i></button>
         </div>
     </div>
 
     <!-- Left section: Image -->
     <div class="image-section">
-        <img src="{% url 'myapp:video_feed' %}" width="400px" height="350px" alt="Video Stream"/>
+        <img src="{% url 'myapp:video_feed' %}" width="600px" height="450px" alt="Video Stream"/>
     </div>
 </div>
 
