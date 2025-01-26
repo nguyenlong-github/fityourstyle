@@ -15,6 +15,18 @@ What does the project do:
 - Virtual reality hair try on
 <img src="hair_try_on.gif" alt="hair_try_on.gif" height="250" width="250">
 
+## User Flow Process
+
+1. **Upload Photo 📤**: Users upload a front-facing photo from their device .
+
+2. **Face Shape Detection 📐**: The AI system analyzes and identifies the user's face shape.
+
+3. **View Hairstyle Suggestions 💡**: A list of hairstyles suitable for the user's face shape is displayed.
+
+4. **Hair Try-On 💇‍♀️✨**: Users can try hairstyles directly on their uploaded photo.
+
+5. **Book an Appointment 📅**: Select the preferred hairstyle and book an appointment at the salon.
+
 ## 🛠️Technologies Used
 - **Languages**: Python
 - **Frameworks**: Django, TensorFlow
