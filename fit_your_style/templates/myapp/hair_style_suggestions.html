@@ -6,30 +6,30 @@
 <h1>Hair Style Suggestions</h1>
 <!-- Gợi ý kiểu tóc -->
 <div class="container">
-    <h2>Suggestion</h2>
+    <h2>提案</h2>
 
     <div id="content-1">
-        <p>Select your face shape and gender to get hairstyle suggestions:</p>
+        <p>顔の形と性別を選んで、ヘアスタイルの提案を受けましょう</p>
         <!-- <img id="face-shape-img" src="fit_your_style/media/myapp/picture/website/face_shape.jpg" alt="Face Shape" style="width: 100px; height: 100px; border: 1px solid black; border-radius: 10px;">
         <br> -->
         <!-- Gender selection -->
         <label>
-            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="male"> 男性
         </label>
         <label>
-            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="female"> 女性
         </label>
         <br>
         <!-- Face shape buttons -->
-        <button class="btn-small" data-face-shape="oblong">Oblong</button>
-        <button class="btn-small" data-face-shape="oval">Oval</button>
-        <button class="btn-small" data-face-shape="heart">Heart</button>
-        <button class="btn-small" data-face-shape="square">Square</button>
-        <button class="btn-small" data-face-shape="round">Round</button>
+        <button class="btn-small" data-face-shape="oblong">長方形型[Oblong]</button>
+        <button class="btn-small" data-face-shape="oval">オーバル型[Oval]</button>
+        <button class="btn-small" data-face-shape="heart">ハート型[Heart]</button>
+        <button class="btn-small" data-face-shape="square">四角型[Square]</button>
+        <button class="btn-small" data-face-shape="round">丸型[Round]</button>
     </div>
 
     <div id="content-2">
-        <p>Suggested hairstyles for you:</p>
+        <p>あなたへのおすすめのヘアスタイル：</p>
         <div class="suggestion-images" style="display: none;">
             <img class="suggestion-img" src="" alt="Suggested Hairstyle 1">
             <img class="suggestion-img" src="" alt="Suggested Hairstyle 2">
@@ -38,7 +38,7 @@
             <img class="suggestion-img" src="" alt="Suggested Hairstyle 5">
             <img class="suggestion-img" src="" alt="Suggested Hairstyle 6">
         </div>
-        <div id="loading-spinner" style="display:none;">Loading...</div>
+        <div id="loading-spinner" style="display:none;">そうそうお待ちください ⌛ ...</div>
         <div id="no-suggestions" style="display:none;">No hairstyle suggestions available.</div>
     </div>
 </div>

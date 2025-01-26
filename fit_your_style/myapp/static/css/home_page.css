@@ -63,10 +63,12 @@ h1 {
     color: #666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    font-size: 18px;
 }
 
   /* Button Styles */
 .content .btn-normal {
+    font-size: large;
     display: inline-block;
     padding: 0.8rem 1.5rem;
     background: var(--gradient);
